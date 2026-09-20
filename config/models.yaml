@@ -1,0 +1,393 @@
+models:
+  # ========== 文本生成模型（小说 + 视频文案） ==========
+  # 2026-09-14 变更记录：
+  #   1) Agnes base_url = https://api.agnes-ai.cn/v1（AGNES_KEY 所属的 key 空间）
+  #      【2026-09-14 23:40 定稿，前两次判断都错了，以此为准】
+  #      Agnes 有**两套互不通用的端点 + key 空间**，key 必须与域名配对：
+  #        api.agnes-ai.cn/v1      <- 中文报错「无效的令牌」；配 sk-CioO… 这把
+  #        apihub.agnes-ai.com/v1  <- 英文报错 "Invalid token"；配 sk-jY3Q… 那把
+  #      实测（同一时刻分别用两把 key 打两个域名 /models + /chat/completions）：
+  #        sk-CioO… (@.cn)    -> .cn 200 / apihub 401 Invalid token
+  #        sk-jY3Q… (@apihub) -> apihub 200 / .cn 401 无效的令牌
+  #      所以 401 的正确读法是「这把 key 不属于这个域名」，不是 key 坏、也不是域名错。
+  #      当前 backend/.env 里是 .cn 空间那把 sk-CioO…，故 base_url = https://api.agnes-ai.cn/v1。
+  #      Agnes 免费无配额，继续作为文本链路第一优先级。
+  #   2) 百炼模型清单整体更新，旧模型 id 全部移除：
+  #      删除 qwen3.7-max-2026-06-08 / glm5.2 / kimi-k2.7-code / qwen-image-3.0-pro
+  #          / wan2.7-* / wan3.0-video / happyhorse-*（TOKEN_KEY 无额度，整组剔除）。
+  #   3) 【glm-5.2 优先使用】——额度即将过期，放在百炼兜底序列的最前面（priority 2）。
+  #      即：Agnes 不可用时，第一个被调用的是 glm-5.2，以便尽快用掉剩余额度。
+  #
+  # 百炼可用模型（DASHSCOPE_API_KEY1，本文件全部已挂载到各角色兜底位）：
+  #   glm-5.2 / qwen3.8-2.4t-a95b / deepseek-v4-pro-0813 / deepseek-v4.1-flash
+  #   / qwen3.8-max-0902 / deepseek-v4-flash-0731 / kimi-k3 / qwen3.8-flash
+  #   / qwen3.7-flash-2026-07-15 / qwen3.8-27b
+
+  # planner（大纲规划）- 需要强推理能力
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: planner
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: planner
+
+  - name: qwen3.8-max-0902
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: planner
+
+  - name: qwen3.8-2.4t-a95b
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: planner
+
+  - name: deepseek-v4-pro-0813
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 5
+    role: planner
+
+  # writer（正文写作）- 需要强写作能力
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: writer
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: writer
+
+  - name: qwen3.8-max-0902
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: writer
+
+  - name: deepseek-v4-pro-0813
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: writer
+
+  - name: kimi-k3
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 5
+    role: writer
+
+  # reviewer（审核）- 需要快速响应
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: reviewer
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: reviewer
+
+  - name: qwen3.8-flash
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: reviewer
+
+  - name: qwen3.7-flash-2026-07-15
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: reviewer
+
+  - name: deepseek-v4-flash-0731
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 5
+    role: reviewer
+
+  # reviser（修改）- 需要快速响应
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: reviser
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: reviser
+
+  - name: deepseek-v4.1-flash
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: reviser
+
+  - name: qwen3.8-flash
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: reviser
+
+  - name: qwen3.8-27b
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 5
+    role: reviser
+
+  # humanizer（去AI化）- 需要自然语言能力 + 高温度多样性
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: humanizer
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: humanizer
+
+  - name: deepseek-v4.1-flash
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: humanizer
+
+  - name: qwen3.8-27b
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: humanizer
+
+  # cover_planner（封面规划）
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: cover_planner
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: cover_planner
+
+  - name: qwen3.8-flash
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: cover_planner
+
+  # ========== 视频文案生成模型 ==========
+  # topic_generator（选题生成）
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: topic_generator
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: topic_generator
+
+  - name: qwen3.8-max-0902
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: topic_generator
+
+  # script_writer（文案生成）
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: script_writer
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: script_writer
+
+  - name: qwen3.8-max-0902
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: script_writer
+
+  # shot_splitter（分镜拆分）
+  - name: agnes-3.0-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: shot_splitter
+
+  - name: glm-5.2
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 2
+    role: shot_splitter
+
+  - name: qwen3.8-flash
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: shot_splitter
+
+  # ========== 图像生成模型 ==========
+  # 2026-09-15 实测调整（合法参数提交验证，产物已落盘）：
+  #   Agnes 图像链路完好（COS 直链可下载），保留 p1。
+  #   百炼 qwen-image 系走 multimodal-generation 同步接口，直接返回签名图片 URL
+  #   （URL 必须带 ?Expires&Signature 查询参数下载，剥掉签名会 403）。
+  #   支持竖版 928*1664。注意 URL 24 小时左右过期，取到后应立即下载。
+  #   qwen-mt-image-2.0 是图片翻译模型（需要输入图），不是文生图，不列入。
+  - name: agnes-image-2.5-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: image_generator
+
+  - name: agnes-image-2.1-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 2
+    role: image_generator
+
+  - name: qwen-image-3.0
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: image_generator
+
+  - name: qwen-image-3.0-pro
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: image_generator
+
+  - name: qwen-image-2.0-pro-2026-06-22
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 5
+    role: image_generator
+
+  # ========== 视频生成模型 ==========
+  # 2026-09-15 实测调整：
+  #   1) Agnes 2.5-flash 免费且端到端跑通，保留 p1（免费档 503 队列塞满时靠下面兜底）。
+  #   2) 百炼 wan3.0-video / -prime：/video-synthesis 端点实测出片（5s 720x1280
+  #      30fps AAC），duration 支持 2~30s、9:16 原生竖屏、默认带音轨，速度快（约3分钟内）。
+  #   3) wan2.7-r2v：reference_image 保持角色与画风（实测成立）。
+  #   4) happyhorse-1.1-*：/generation 端点，24fps，免费档有日额度 429（2026-09-16 11:01 重置）。
+  #   5) 调用示例与参数见 .workbuddy/Agnes视频API实测手册.md 与记忆 2026-09-15.md
+  - name: agnes-video-2.5-flash
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 1
+    role: video_generator
+
+  - name: agnes-video-2.5
+    base_url: https://api.agnes-ai.cn/v1
+    api_key_env: AGNES_KEY
+    quota: 1000000
+    priority: 2
+    role: video_generator
+
+  - name: wan3.0-video
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 3
+    role: video_generator
+
+  - name: wan3.0-video-prime
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 4
+    role: video_generator
+
+  - name: wan2.7-r2v-2026-06-12
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/video-generation/video-synthesis
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 5
+    role: video_generator
+
+  - name: happyhorse-1.1-i2v
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/video-generation/generation
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 6
+    role: video_generator
+
+  - name: happyhorse-1.1-t2v
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/video-generation/generation
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 7
+    role: video_generator
+
+  - name: happyhorse-1.1-r2v
+    base_url: https://dashscope.aliyuncs.com/api/v1/services/aigc/video-generation/generation
+    api_key_env: DASHSCOPE_API_KEY1
+    quota: 1000000
+    priority: 8
+    role: video_generator
+

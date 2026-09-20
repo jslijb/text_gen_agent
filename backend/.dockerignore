@@ -1,0 +1,10 @@
+# backend/.dockerignore（spec v1.4.0）
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.env
+.git
+.gitignore
+tests/
+*.md

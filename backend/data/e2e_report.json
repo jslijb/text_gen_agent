@@ -1,0 +1,23 @@
+{
+  "steps": [
+    {
+      "step": "create_project+outline",
+      "status": "PASS",
+      "project_id": "a92b984e-1337-44fa-aded-a016e4d550bd",
+      "chapters_planned": 3
+    },
+    {
+      "step": "generate_chapter",
+      "status": "PASS",
+      "chars": 2199,
+      "model": "qwen3.7-plus"
+    },
+    {
+      "step": "humanize",
+      "status": "PASS",
+      "ai_before": 68.5,
+      "ai_after": 68.5,
+      "replaced": 0
+    }
+  ]
+}

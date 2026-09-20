@@ -1,0 +1,7 @@
+# frontend/.dockerignore（spec v1.4.0）
+node_modules
+.next
+.env*
+.git
+.gitignore
+*.md

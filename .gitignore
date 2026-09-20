@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment（密钥与账号凭据，一律不入库）
+.env
+*.env
+*.env.local
+.env.*
+!.env.example
+
+# WorkBuddy 工作目录（含本地 API key、工作日志与个人记录）
+.workbuddy/
+
+# AI 工具产物
+.arts/
+.codeartsdoer/
+.codegraph/
+.opencode/
+.merkle-snapshot.json
+
+# 生成产物（体积大：视频、封面、日志）
+output/
+logs/
+backend/static/covers/
+backend/app/static/covers/
+backend/app/static/videos/
+backend/app/static/reports/
+
+# Data
+data/chroma_db/
+data/cookies/
+data/novels/
+*.db
+*.sqlite3
+celerybeat-schedule
+
+# Node
+node_modules/
+.next/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs / 备份
+*.log
+*.bak
+
+# Test
+.pytest_cache/
+htmlcov/

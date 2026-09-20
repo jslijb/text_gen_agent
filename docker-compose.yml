@@ -1,0 +1,105 @@
+# spec v1.5.0：Docker 化部署
+# 启动方式：docker compose up -d
+# PostgreSQL 和 Redis 使用外部共享容器（host.docker.internal 访问），不在此管理
+# 公共环境变量（通过 host.docker.internal 连接宿主机上的共享 PG/Redis）
+x-common-env: &common-env
+  DATABASE_URL: postgresql://postgres:postgres@host.docker.internal:5432/ai_novel
+  REDIS_URL: redis://host.docker.internal:6379/0
+  CELERY_BROKER_URL: redis://host.docker.internal:6379/1
+  CELERY_RESULT_BACKEND: redis://host.docker.internal:6379/2
+  EMBEDDING_LOCAL_PATH: /models/BAAI/bge-large-zh-v1___5
+  MODELS_CONFIG_PATH: /app/config/models.yaml
+  CHROMA_PERSIST_DIR: /app/data/chroma_db
+  NOVELS_DIR: /app/data/novels
+  COOKIES_DIR: /app/data/cookies
+  LOGS_DIR: /app/logs
+  COVERS_DIR: /app/static/covers
+  STATIC_DIR: /app/static
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_novel_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment: *common-env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./config:/app/config:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backend/static:/app/static
+      - /d/models/modelscope:/models:ro
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_novel_worker
+    restart: always
+    command: celery -A app.config.celery_config.celery_app worker --loglevel=info
+    env_file:
+      - ./backend/.env
+    environment: *common-env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./config:/app/config:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backend/static:/app/static
+      - /d/models/modelscope:/models:ro
+
+  # 2026-09-15 新增。此前 compose 里只有 backend/worker/frontend，
+  # 没有 beat 服务，worker 命令也没带 -B —— 于是 celery_config 里配的
+  # beat_schedule（check-daily-publish 日更调度、cleanup-knowledge）
+  # 在 Docker 部署下从未执行过，连载的"自动日更"实际上是空的。
+  beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai_novel_beat
+    restart: always
+    # -s 把调度状态文件放进挂载目录：容器重建后 beat 不会"失忆"而重复触发已跑过的任务
+    command: celery -A app.config.celery_config.celery_app beat --loglevel=info -s /app/data/celerybeat-schedule
+    env_file:
+      - ./backend/.env
+    environment: *common-env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./config:/app/config:ro
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backend/static:/app/static
+      - /d/models/modelscope:/models:ro
+    depends_on:
+      - backend
+      - worker
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai_novel_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      BACKEND_URL: http://backend:8000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/next.config.ts:/app/next.config.ts
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+      - ./frontend/postcss.config.js:/app/postcss.config.js
+      - ./frontend/package.json:/app/package.json
+      - /app/node_modules
+    depends_on:
+      - backend
