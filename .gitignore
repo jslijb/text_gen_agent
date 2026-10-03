@@ -66,3 +66,16 @@ Thumbs.db
 # Test
 .pytest_cache/
 htmlcov/
+
+# 本地回收目录（待用户确认后定期清空）
+_trash_*/
+
+# 工具运行时缓存 / 浏览器 profile（非源码，体积大；.freebuff 内含 pytest 生成的临时 .env）
+.freebuff/
+.openclaw/
+.openclaw-attachments/
+.pw_chrome/
+
+# WorkBuddy 个人身份文件（含真实姓名 / 职业经历，Public 仓库不公开）
+/SOUL.md
+/USER.md

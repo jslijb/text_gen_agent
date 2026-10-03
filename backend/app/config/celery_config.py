@@ -10,7 +10,7 @@ celery_app = Celery(
     "ai_novel",
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND,
-    include=["app.tasks.novel_tasks", "app.tasks.publish_tasks", "app.tasks.knowledge_tasks", "app.tasks.cover_tasks"],
+    include=["app.tasks.novel_tasks", "app.tasks.publish_tasks", "app.tasks.knowledge_tasks", "app.tasks.cover_tasks", "app.tasks.sieve_tasks"],
 )
 
 celery_app.conf.update(
@@ -46,6 +46,12 @@ celery_app.conf.update(
         "cleanup-knowledge": {
             "task": "app.tasks.knowledge_tasks.cleanup_knowledge_base",
             "schedule": crontab(hour=3, minute=0),  # 每日凌晨3点清理过期知识库
+        },
+        # sieve 抓取：run 要跑几分钟甚至更久，单次 worker 任务的轮询预算用完后
+        # 状态留在 running，由这个补轮询任务接力（也是重启/崩溃后的恢复路径）。
+        "resume-sieve-runs": {
+            "task": "app.tasks.sieve_tasks.resume_pending_sieve_runs",
+            "schedule": crontab(minute="*/5"),
         },
     },
 )

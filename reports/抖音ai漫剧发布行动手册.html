@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抖音 AI 漫剧发布行动手册 · 2026 年 10 月</title>
+<style>
+  :root{
+    --bg:#f2f2ef;
+    --paper:#fbfbf9;
+    --ink:#1d1d21;
+    --ink-2:#56565c;
+    --ink-3:#8e8e93;
+    --hair:#dad9d2;
+    --hair-dark:#b3b2aa;
+    --accent:#b23a4e;
+    --mono:Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+    font-size:15.5px;
+    line-height:1.78;
+  }
+  .page{max-width:1280px;margin:0 auto;padding:56px 40px 72px}
+  .kicker{
+    font-family:var(--mono);font-size:12px;letter-spacing:.08em;
+    color:var(--ink-2);text-transform:uppercase;
+  }
+  .kicker .dot{color:var(--accent)}
+  h1{font-size:46px;font-weight:600;letter-spacing:-0.02em;line-height:1.15;margin:18px 0 14px}
+  .sub{font-size:16px;color:var(--ink-2);max-width:46em}
+  .masthead{border-bottom:2px solid var(--ink);padding-bottom:28px}
+  .lede{font-size:17px;line-height:1.85;margin:30px 0 8px;max-width:44em}
+  .lede strong{font-weight:600}
+  .layout{display:grid;grid-template-columns:196px minmax(0,1fr);gap:56px;margin-top:44px}
+  nav.toc{
+    position:sticky;top:36px;align-self:start;font-size:12.5px;
+    border-left:1px solid var(--hair-dark);padding-left:16px;
+  }
+  nav.toc .toc-title{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    color:var(--ink-3);text-transform:uppercase;margin-bottom:10px;
+  }
+  nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:4px 0;line-height:1.5}
+  nav.toc a:hover{color:var(--ink)}
+  section{margin-bottom:52px}
+  .sec-head{
+    display:flex;align-items:baseline;gap:14px;
+    border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:20px;
+  }
+  .sec-no{font-family:var(--mono);font-size:13px;color:var(--accent)}
+  h2{font-size:24px;font-weight:600;letter-spacing:-0.01em;line-height:1.25}
+  h3{font-size:17px;font-weight:600;margin:26px 0 8px}
+  p{margin:0 0 14px;max-width:44em}
+  p.wide{max-width:none}
+  .note{
+    font-size:12.5px;color:var(--ink-2);
+    border-top:1px solid var(--hair);padding-top:10px;margin-top:16px;max-width:none;
+  }
+  table{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.65;margin:16px 0 8px}
+  th{
+    text-align:left;font-weight:510;font-size:12.5px;letter-spacing:.03em;color:var(--ink);
+    border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);
+    padding:9px 12px 8px 0;white-space:nowrap;
+  }
+  td{border-bottom:1px solid var(--hair);padding:10px 12px 10px 0;vertical-align:top;color:var(--ink)}
+  td.dim{color:var(--ink-2)}
+  td.num{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+  table.plain th{border-top:1px solid var(--ink)}
+  /* verdict box */
+  .verdict{
+    border-top:1px solid var(--hair-dark);border-bottom:1px solid var(--hair-dark);
+    padding:18px 0;margin:24px 0 8px;
+    display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;align-items:start;
+  }
+  .verdict .v-label{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent);padding-top:4px;
+  }
+  .verdict .v-body{font-size:15.5px;max-width:none}
+  /* stage timeline */
+  .stages{margin:18px 0 6px}
+  .stage{
+    display:grid;grid-template-columns:118px minmax(0,1fr);gap:24px;
+    padding:18px 0;border-bottom:1px solid var(--hair);
+  }
+  .stage:last-child{border-bottom:none}
+  .stage .s-when{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:2px}
+  .stage .s-title{font-size:16px;font-weight:600;margin-bottom:6px}
+  .stage .s-text{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+  .stage .s-text strong{color:var(--ink);font-weight:510}
+  /* checklist */
+  ul.checks{list-style:none;margin:12px 0 6px}
+  ul.checks li{
+    position:relative;padding:7px 0 7px 26px;font-size:14px;line-height:1.65;
+    border-bottom:1px solid var(--hair);
+  }
+  ul.checks li::before{
+    content:"";
+    position:absolute;left:2px;top:15px;
+    width:11px;height:6px;
+    border-left:1.6px solid var(--ink);border-bottom:1.6px solid var(--ink);
+    transform:rotate(-45deg);
+  }
+  ul.checks li strong{font-weight:510}
+  ul.checks li .dim{color:var(--ink-2);font-size:13px}
+  /* risk cards */
+  .risks{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--hair-dark);margin:18px 0 8px}
+  .risk{padding:16px 24px 14px 0;border-bottom:1px solid var(--hair)}
+  .risk:nth-child(odd){border-right:1px solid var(--hair);padding-right:24px}
+  .risk:nth-child(even){padding-left:24px}
+  .risk h4{font-size:14px;font-weight:600;margin-bottom:6px}
+  .risk h4 span{font-family:var(--mono);font-size:11px;color:var(--accent);margin-right:8px}
+  .risk p{font-size:13px;color:var(--ink-2);margin:0;line-height:1.65}
+  .colophon{border-top:2px solid var(--ink);margin-top:24px;padding-top:18px;font-size:12.5px;color:var(--ink-2)}
+  .colophon .col-title{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:10px;
+  }
+  .colophon ol{list-style:none;column-count:2;column-gap:40px}
+  .colophon li{padding:4px 0;line-height:1.55;break-inside:avoid}
+  .colophon li .u{font-family:var(--mono);font-size:11px;color:var(--ink-3);word-break:break-all}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;gap:24px}
+    nav.toc{position:static;border-left:none;padding-left:0;display:none}
+    .verdict{grid-template-columns:1fr;gap:6px}
+    .risks{grid-template-columns:1fr}
+    .risk:nth-child(odd){border-right:none;padding-right:0}
+    .risk:nth-child(even){padding-left:0}
+    .stage{grid-template-columns:1fr;gap:4px}
+    h1{font-size:34px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <div class="kicker">行动手册<span class="dot"> · </span>个人创作者 · 抖音端<span class="dot"> · </span>2026-10-02</div>
+    <h1>抖音 AI 漫剧发布行动手册</h1>
+    <p class="sub">老号重启 → 试制测试 → 定向连载 → 合规变现的四阶段执行方案，配套 2026 年最新合规要求</p>
+  </header>
+
+  <p class="lede"><strong>先说账号：直接重启老号，不要换号。</strong>注册几年的老号几乎没发过作品，等于一个「干净号」——没有违规历史、没有杂乱标签、无机刷行为，比乱发过内容的号重启容易得多。账号年龄带来的信用基础是加分项。要做的是三步：查违规记录、完善资料定向、让推荐系统重新认识你。</p>
+
+  <div class="verdict">
+    <div class="v-label">现实预期</div>
+    <div class="v-body">
+      2026 上半年全网新上 AI 短剧 22.19 万部，播放破亿的仅 1055 部（0.47%），约 90% 的从业公司亏损。个人入局的优势是不用扛承制成本，劣势是没投流预算——所以打法必须是<strong>「自然流量模型 + 单集钩子 + 连载追更」</strong>，先验证数据再放大，前 1–2 个月基本无收入是正常曲线。市面上的「保底 75 万」「单条净利 20 万+」是平台签约活动或教程营销话术，不是普通个人能拿到的默认待遇。
+    </div>
+  </div>
+
+  <div class="layout">
+
+    <nav class="toc">
+      <div class="toc-title">目录</div>
+      <a href="#s1">01 账号重启：第一周做什么</a>
+      <a href="#s2">02 合规：先划红线再动笔</a>
+      <a href="#s3">03 赛道与内容策略</a>
+      <a href="#s4">04 单人制作流水线</a>
+      <a href="#s5">05 发布与数据运营</a>
+      <a href="#s6">06 变现路径与节奏</a>
+      <a href="#s7">07 风险清单</a>
+      <a href="#src">附：来源清单</a>
+    </nav>
+
+    <main>
+
+      <section id="s1">
+        <div class="sec-head"><span class="sec-no">01</span><h2>账号重启：第一周做什么</h2></div>
+        <div class="stages">
+          <div class="stage">
+            <div class="s-when">Day 1–2</div>
+            <div>
+              <div class="s-title">体检 + 清理</div>
+              <div class="s-text">抖音「设置 → 账号与安全 / 账号状态检测」查一遍违规记录；把历史发布的杂乱旧作品<strong>隐藏</strong>（发得少，工作量极小）。若昵称/简介带广告敏感词，先改掉。</div>
+            </div>
+          </div>
+          <div class="stage">
+            <div class="s-when">Day 1–2</div>
+            <div>
+              <div class="s-title">资料定向</div>
+              <div class="s-text">昵称带「漫剧 / 剧场 / 短篇」类关键词（好搜好记），简介写清「更新什么题材 + 更新频率 + 更新时间」。头像、封面色系统一。资料完整度本身影响账号初始识别。</div>
+            </div>
+          </div>
+          <div class="stage">
+            <div class="s-when">Day 3–7</div>
+            <div>
+              <div class="s-title">让标签归位</div>
+              <div class="s-text">每天 20–30 分钟只做一件事：搜索并完整观看热门 AI 漫剧，点赞、关注 10–20 个同类头部账号。作用是让推荐系统把「你」和「漫剧内容消费者」绑定，<strong>发布时内容才能进对流量池</strong>。机械刷量、互粉群没有用，不要碰。</div>
+            </div>
+          </div>
+          <div class="stage">
+            <div class="s-when">Day 7</div>
+            <div>
+              <div class="s-title">测试发布</div>
+              <div class="s-text">先发 1–2 条低成本测试内容（单格漫画 + 热门梗、制作花絮），看 24 小时播放是否过 200–500 的正常水位，确认账号没有被限流，再进入正片制作。</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s2">
+        <div class="sec-head"><span class="sec-no">02</span><h2>合规：先划红线再动笔</h2></div>
+        <p>2026 年漫剧监管全面收紧，这套规则直接决定账号生死，先于一切创作动作。</p>
+        <table>
+          <thead>
+            <tr><th>要求</th><th>内容</th><th>对你的影响</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>备案制</strong></td>
+              <td class="dim">2026-04-01 起 AI 漫剧纳入「广电 + 平台」双重备案，先备案后上线；未备案存量已强制下架。按投资额与题材分级审核。</td>
+              <td class="dim">以普通视频形式发布短片，走平台常规内容审核；一旦要走「动画微短剧 / 漫剧」官方类目、挂载变现、入驻红果番茄，需按平台流程完成备案与资质核验（企业账号需广电节目制作经营许可证，个人通常需签约 MCN 或平台合作计划）。</td>
+            </tr>
+            <tr>
+              <td><strong>AI 标识</strong></td>
+              <td class="dim">AI 漫剧强制标注「AI 生成」。</td>
+              <td class="dim">发布时勾选「内容由 AI 生成」声明——这是硬性要求，不勾有下架和账号风险。</td>
+            </tr>
+            <tr>
+              <td><strong>审核细则</strong></td>
+              <td class="dim">2026-04-07 抖音/红果收严漫剧审核；7 月起执行 AI 微短剧专属标准，业内传过审率降至约 30%。书名、简介明确禁止：拜金炫富、出轨、宣扬不良价值观；禁止魔改经典。</td>
+              <td class="dim">起名先过一道自我审查；玄幻/系统/萌宠等题材相对安全，都市情感擦边、软色情、以「报复打脸」包装极端价值观的剧本直接放弃。</td>
+            </tr>
+            <tr>
+              <td><strong>质量门槛</strong></td>
+              <td class="dim">AI 仿真人剧等品类要求画面清晰稳定、人物形象一致、动作表情衔接自然，限制「走量」模式。</td>
+              <td class="dim">「一天发 20 条」的量打法已死。角色一致性是基本功，崩脸、闪烁、逻辑断裂的画面宁可重做。</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">政策细节以抖音集团短剧创作者中心最新版《动画微短剧审核细则》与平台内通知为准；本表为公开报道口径（流媒体网、澎湃、新浪财经等），执行前务必在抖音创作者中心核对当期版本。</p>
+      </section>
+
+      <section id="s3">
+        <div class="sec-head"><span class="sec-no">03</span><h2>赛道与内容策略</h2></div>
+        <p>结合 2026 年 8–10 月榜单数据（详见姊妹篇《抖音 AI 漫剧热门题材调研》），给个人号三个可选切入点，按「竞争烈度 × 个人产能」排序：</p>
+        <table>
+          <thead>
+            <tr><th>策略</th><th>题材</th><th>逻辑</th><th>适合</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A · 蹭验证过的公式</strong></td>
+              <td class="dim">逆袭 + 都市情绪（职场打压、年终奖、邻里）</td>
+              <td class="dim">情绪开关清晰、模板最全，爆款要素可复用；代价是供给超万部、最卷，拼前 3 秒钩子和投流效率</td>
+              <td class="dim">文案能力强、懂打工人情绪梗</td>
+            </tr>
+            <tr>
+              <td><strong>B · 抢增量赛道</strong></td>
+              <td class="dim">末世系统流（囤货/基建/金手指）</td>
+              <td class="dim">10 月抖音端原生热播榜 TOP1 即此类；强视觉场面恰是 AI 相对真人的优势区，且题材自带「下一集」钩子</td>
+              <td class="dim">会写脑洞设定、喜欢爽文结构</td>
+            </tr>
+            <tr>
+              <td><strong>C · 女频蓝海</strong></td>
+              <td class="dim">萌宝团宠 / 大女主双强（无 CP 爽点）</td>
+              <td class="dim">竞争烈度低于男频，红果 TOP30 已验证；「无 CP 事业爽」是新情绪开关，女性真人短剧用户正在向漫剧迁移</td>
+              <td class="dim">擅长情感戏与人物塑造</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>默认建议 B（末世系统流）</strong>：视觉冲击利于冷启动完播率，连载结构天然，审核风险低于都市情绪类。形式上：竖屏 9:16、单集 60–90 秒、8–12 个分镜、前 3 秒冲突钩子、每 15–20 秒一个反转、结尾必留悬念。先做 5–10 集跑通数据，再决定是否做季播长线（红果/抖音已支持连载与分季管理）。</p>
+        <p class="note">取名自查清单：不炫富（钱数字最好别进书名）、不出轨梗、不碰经典 IP 魔改（西游、名著人物审核极严）、书名即卖点（题材 + 钩子一眼可读）。</p>
+      </section>
+
+      <section id="s4">
+        <div class="sec-head"><span class="sec-no">04</span><h2>单人制作流水线（低预算组合）</h2></div>
+        <p>主流零基础组合：<strong>豆包（剧本分镜）→ 即梦（角色与分镜静帧 + 图生视频）→ 剪映（配音字幕剪辑）</strong>，全部字节系、与抖音生态同源，新手教程存量也最多；进阶可换可灵（视频生成质量）与 ComfyUI（角色一致性控制）。B 站有大量 2026 版全流程免费教程，先跟练一集再开工。</p>
+        <table>
+          <thead>
+            <tr><th>环节</th><th>工具</th><th>关键工艺</th><th>新手产能参考</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 剧本 / 分镜</strong></td>
+              <td class="dim">豆包 / 任意 LLM</td>
+              <td class="dim">不要让 AI 自由发挥写「小说式剧本」——用结构化模板：每集输出镜号 / 景别 / 画面描述 / 台词 / 时长，自己改到有钩子再进下一环</td>
+              <td class="num">0.5 天 / 集</td>
+            </tr>
+            <tr>
+              <td><strong>2. 角色设定</strong></td>
+              <td class="dim">即梦</td>
+              <td class="dim">先出主角三视图（正面 / 侧面 / 全身）存为参考图，之后所有分镜都挂参考图生成，锁定跨镜头、跨集一致性</td>
+              <td class="num">0.5 天（一次投入，多集复用）</td>
+            </tr>
+            <tr>
+              <td><strong>3. 分镜静帧</strong></td>
+              <td class="dim">即梦</td>
+              <td class="dim">统一画风关键词（写进预设提示词）：画风、色板、光线、构图角度；一集 8–12 帧</td>
+              <td class="num">0.5–1 天 / 集</td>
+            </tr>
+            <tr>
+              <td><strong>4. 图生视频</strong></td>
+              <td class="dim">即梦 / 可灵</td>
+              <td class="dim">每镜生成 5–10 秒动态片段；动作简单的镜头优先，大动态镜头（打斗、奔跑）是崩坏重灾区，用运镜与剪辑节奏规避</td>
+              <td class="num">1 天 / 集（含重roll）</td>
+            </tr>
+            <tr>
+              <td><strong>5. 配音 / 音效</strong></td>
+              <td class="dim">剪映 / TTS</td>
+              <td class="dim">角色音色固定并存档；音效是漫剧的「爽感放大器」（打击、转场、卡点）；音画必须同步</td>
+              <td class="num">0.5 天 / 集</td>
+            </tr>
+            <tr>
+              <td><strong>6. 剪辑包装</strong></td>
+              <td class="dim">剪映</td>
+              <td class="dim">大字号字幕必配；片头 3 秒直接进冲突；统一片头版式与封面模板；结尾「下集预告 + 关注追更」</td>
+              <td class="num">0.5 天 / 集</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">起步按 3–5 天 / 集规划，熟练后 1–2 天 / 集。成本构成（行业拆解）：剧本占 10–15%、算力约 30%、人工 60%——对个人主要是即梦 / 可灵会员的算力钱，每月数百元级。</p>
+      </section>
+
+      <section id="s5">
+        <div class="sec-head"><span class="sec-no">05</span><h2>发布与数据运营</h2></div>
+        <ul class="checks">
+          <li><strong>发布声明：</strong>勾选「AI 生成内容」标识 <span class="dim">—— 硬性要求，不勾有下架与账号风险</span></li>
+          <li><strong>标题结构：</strong>书名（题材+钩子）+ 一句情绪文案 + 3–5 个垂类话题 <span class="dim">#AI漫剧 #漫剧 #漫剧推荐 #无脑爽剧 等，参考同类头部在用的话题</span></li>
+          <li><strong>封面统一：</strong>同一版式模板（角色 + 大字书名 + 集数），主页九宫格整齐 <span class="dim">—— 连载剧的「剧感」来自主页观感</span></li>
+          <li><strong>更新节奏：</strong>每周 3–5 集、固定时段（18:00–22:00 流量高峰）、状态标「连载中」 <span class="dim">—— 稳定比爆发重要，追更用户养的是习惯</span></li>
+          <li><strong>冷启动测试：</strong>先发 5–10 集看数据再定向 <span class="dim">—— 单集数据差≠题材差，看的是趋势</span></li>
+        </ul>
+        <h3>盯这四个指标，别盯播放量</h3>
+        <table class="plain">
+          <thead>
+            <tr><th>指标</th><th>看什么</th><th>对症调整</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>3 秒完播率</td><td class="dim">钩子是否成立</td><td class="dim">低于 45% → 重剪片头：冲突前置、删铺垫</td></tr>
+            <tr><td>整体完播率</td><td class="dim">节奏与时长</td><td class="dim">低 → 单集压到 60 秒内，或删掉 1–2 个平镜</td></tr>
+            <tr><td>追更 / 集间跳转</td><td class="dim">连载钩子强度</td><td class="dim">低 → 结尾悬念升级，尝试「下集预告」固定版式</td></tr>
+            <tr><td>转粉率</td><td class="dim">账号记忆点</td><td class="dim">低 → 强化统一画风 / 固定角色 / 固定片头语</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="s6">
+        <div class="sec-head"><span class="sec-no">06</span><h2>变现路径与节奏</h2></div>
+        <p>个人号在抖音端的变现是一条阶梯，不要在粉丝基础没起来前纠结「挂载」：</p>
+        <table>
+          <thead>
+            <tr><th>阶段</th><th>路径</th><th>门槛 / 说明</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>第 1 阶 · 攒粉期（0–1 万粉）</strong></td>
+              <td class="dim">先不谈变现，做数据</td>
+              <td class="dim">唯一目标：跑出一条破 50 万播放的单集，验证「账号 + 题材 + 制作」闭环</td>
+            </tr>
+            <tr>
+              <td><strong>第 2 阶 · 基础收益（5000+ 互动粉）</strong></td>
+              <td class="dim">创作者伙伴计划：按播放量结算的视频收益</td>
+              <td class="dim">门槛约 5000 互动粉丝；漫剧类内容播放量大，该阶段收益开始可感知</td>
+            </tr>
+            <tr>
+              <td><strong>第 3 阶 · 多平台分发</strong></td>
+              <td class="dim">中视频伙伴计划（横屏 1 分钟以上）</td>
+              <td class="dim">一次发布同步西瓜 / 抖音 / 头条三平台创作收益；漫剧可做竖屏主发 + 横屏合集双版本</td>
+            </tr>
+            <tr>
+              <td><strong>第 4 阶 · 挂载与分账</strong></td>
+              <td class="dim">短剧小程序推广任务；漫剧正片分账 / 入驻红果番茄</td>
+              <td class="dim">切片挂短剧小程序任务是个体最常见的挂载变现；正片分账（如成品漫剧分账、番茄原创免费模式分成 90–100%）、平台签约保底活动需主体资质或与平台 / MCN 签约，以抖音短剧创作者中心当期政策为准</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">两个提醒：① 番茄等渠道对「首发独家」有时长要求（如首发 14 天独家后才可他平台分发），多平台分发前看清授权条款；② 你同时做快手 AI 漫剧方向的话，注意各平台首发独家条款冲突，建议主平台首发期满再同步。</p>
+      </section>
+
+      <section id="s7">
+        <div class="sec-head"><span class="sec-no">07</span><h2>风险清单</h2></div>
+        <div class="risks">
+          <div class="risk">
+            <h4><span>R1</span>审核不过</h4>
+            <p>漫剧过审率传闻已降至约 30%。书名简介先行自查；脚本避开拜金炫富、出轨、极端复仇、经典 IP 魔改；发布前用小号预览自查敏感画面。</p>
+          </div>
+          <div class="risk">
+            <h4><span>R2</span>限流与违规</h4>
+            <p>AI 标识不勾、搬运他人素材、片头大字「震惊体」、简介引流微信，都是降权点。发布后 1 小时看播放是否异常（长期两位数），异常先查账号状态。</p>
+          </div>
+          <div class="risk">
+            <h4><span>R3</span>版权与素材</h4>
+            <p>剧本、角色图、BGM 都要留底（AI 生成记录即权属证据链）；BGM 用剪映商用曲库；不要复刻他人爆款的角色形象与分镜——漫剧圈已开始维权。</p>
+          </div>
+          <div class="risk">
+            <h4><span>R4</span>预期管理</h4>
+            <p>约 90% 从业者亏损、爆款率 0.47% 是行业现实；个人前 2 个月无收入属正常。把「每周稳定更 3–5 集 × 8 周」当成败线，而不是单条爆款。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="src">
+        <div class="colophon">
+          <div class="col-title">来源清单 / Sources</div>
+          <ol>
+            <li>流媒体网《抖音凌晨 3 点发新规，漫剧创作者的「好日子」到头了？》<br><span class="u">lmtw.com/mzw/content/detail/id/256268</span></li>
+            <li>新浪财经《抖音、红果：动画微短剧新规落地，4 月 7 日起正式执行》<br><span class="u">finance.sina.com.cn/wm/2026-03-26/doc-inhsiusk0049469.shtml</span></li>
+            <li>知乎《如何评价 2026 年 7 月 AI 微短剧备案新规》<br><span class="u">zhuanlan.zhihu.com/p/2079161278673826488</span></li>
+            <li>网文头条《2026 平台微短剧、漫剧官方内容审核规则一览（20260626 更新）》<br><span class="u">m.wzbj1616.com/art_info/910</span></li>
+            <li>中豪研究《2026 年 AI 影视合规：监管框架、核心义务与实务要点》<br><span class="u">zhhlaw.com/article/detail/1020</span></li>
+            <li>搜狐《抖音抬高 AI 仿真人剧准入门槛，四类题材 8 月 3 日起执行》<br><span class="u">sohu.com/a/1053850427_655634</span></li>
+            <li>腾讯新闻《抖音漫剧新政：0 成本、75 万保底、3 万/min、搞季播》<br><span class="u">news.qq.com/rain/a/20251110A06M1R00</span></li>
+            <li>网易《抖音短剧版权中心官宣成品漫剧分账：特定单价、充值金额 7%》<br><span class="u">163.com/dy/article/KD55HA0T0531KHEM.html</span></li>
+            <li>抖音开放平台《微短剧行业解决方案（小程序）》<br><span class="u">developer.open-douyin.com/docs/resource/zh-CN/mini-app/open-capacity/solutions/vertical/micro-drama</span></li>
+            <li>西瓜创作百科《中视频伙伴计划基本介绍》<br><span class="u">doc.toutiao.com/detail/597</span></li>
+            <li>钛媒体《AI 短剧的暴富神话，半年就退烧了》<br><span class="u">tmtpost.com/8151367.html</span></li>
+            <li>蝉妈妈《抖音老号能重新起号吗？重启方法》<br><span class="u">chanmama.com/yunyingquan/question/4474.html</span></li>
+            <li>知乎《全网最实战：用 AI 做一集短剧的全流程拆解》<br><span class="u">zhuanlan.zhihu.com/p/2057548680949937397</span></li>
+            <li>B 站《AI 漫剧制作全教程（即梦 + 剪映 + 豆包）》<br><span class="u">bilibili.com/video/BV1UeeG6TEwq</span></li>
+          </ol>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+</body>
+</html>

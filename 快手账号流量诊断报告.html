@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快手账号流量诊断 · 2026-09-21</title>
+<style>
+  :root{
+    --bg:#FAFAF8; --ink:#141414; --muted:#6B6B66; --line:#E3E3DE;
+    --accent:#B42318; --ok:#2F6B3A; --warn:#8A6D1C;
+    --sans:"Bahnschrift","Segoe UI","Microsoft YaHei",sans-serif;
+    --mono:"Cascadia Mono",Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.62;font-size:15.5px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:56px 28px 80px}
+  .kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:34px;line-height:1.18;letter-spacing:-.02em;font-weight:600;margin:14px 0 10px;max-width:21em}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:18px}
+  .lede{font-size:17px;margin:26px 0 8px;max-width:44em}
+  .lede strong{font-weight:600}
+  section{margin-top:54px}
+  .secno{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em}
+  h2{font-size:21px;font-weight:600;letter-spacing:-.01em;margin:6px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  p{max-width:46em;margin-bottom:12px}
+  .mut{color:var(--muted)}
+  .mono{font-family:var(--mono)}
+  .mrow{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-bottom:none}
+  .mrow .m{flex:1 1 130px;min-width:130px;padding:14px 16px;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+  .mrow .m:last-child{border-right:none}
+  .m .v{font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:-.01em}
+  .m .k{font-size:12px;color:var(--muted);margin-top:2px}
+  .m .s{font-size:11.5px;margin-top:4px}
+  .sup{color:var(--ok)} .bad{color:var(--accent)}
+  table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:14px}
+  th{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:500;border-bottom:1px solid var(--ink);padding:8px 10px}
+  td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
+  tr:last-child td{border-bottom:1px solid var(--ink)}
+  td.num{font-family:var(--mono);white-space:nowrap}
+  .verdict{border:1px solid var(--ink);padding:20px 22px;margin:16px 0}
+  .verdict .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--accent)}
+  .verdict h3{font-size:19px;margin:6px 0 8px;font-weight:600}
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 8px;border:1px solid var(--line);margin-left:6px;vertical-align:2px}
+  .badge.ok{color:var(--ok);border-color:var(--ok)}
+  .badge.bad{color:var(--accent);border-color:var(--accent)}
+  .badge.warn{color:var(--warn);border-color:var(--warn)}
+  .cause{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .cause .n{font-family:var(--mono);font-size:20px;color:var(--accent);min-width:34px}
+  .cause h4{font-size:15.5px;font-weight:600;margin-bottom:3px}
+  .cause p{font-size:14px;color:#3A3A36;margin-bottom:0;max-width:48em}
+  ol.steps{counter-reset:st;list-style:none;margin:10px 0}
+  ol.steps li{counter-increment:st;display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
+  ol.steps li::before{content:counter(st,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--accent);min-width:26px;padding-top:2px}
+  ol.steps b{font-weight:600}
+  ol.steps .path{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  figure{margin:18px 0 6px}
+  figcaption{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:8px}
+  .figwrap{border:1px solid var(--line);padding:18px 14px 12px;background:#fff}
+  .dim{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .dim .name{min-width:96px;font-weight:600}
+  .dim .bar{flex:0 0 220px;height:8px;background:#EFEFEA;position:relative}
+  .dim .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+  .dim .bar i.low{background:var(--accent)}
+  .dim .val{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  .note{border-left:2px solid var(--ink);padding:2px 0 2px 14px;margin:16px 0;font-size:14.5px;max-width:46em}
+  .foot{margin-top:64px;border-top:1px solid var(--ink);padding-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">Kuaishou Creator Account · Traffic Diagnosis</div>
+  <h1>播放量从 3000+ 掉到 100+：不是限流，是老号重启后的流量重建期</h1>
+  <div class="meta">
+    <span>报告日期 2026-09-21</span>
+    <span>样本视频《它用婴儿的哭声钓鱼》2026-09-20 21:03 发布</span>
+    <span>数据窗口 = 作品上线后 ≈22 小时（09-20 21:03 发布 → 09-21 18:49 截图；不是视频时长、不是播放时长）</span>
+    <span>账号状态 数年老号 · 长期低频更新 · 近期重启日更</span>
+    <span>账号定位 AI 经典奇谈 / 山海经系列</span>
+  </div>
+  <p class="lede">三条后台证据（作品质量正常徽章、官方流量助推仍在发放、平台诊断“流量效果正常且超过 55% 同类作品”）均指向<strong>账号未被限流</strong>。真实下滑原因按可能性排序：<strong>老号重启后探索性流量退坡（主因，叠加老粉画像不匹配）</strong>、单条互动绝对值过小喂不动推荐算法、账号标签尚未重建。修复重心在<strong>入口效率（2 秒跳出 45.5%、封面点击 0%）与互动工程</strong>，而不是申诉洗号。</p>
+</header>
+
+<section>
+  <div class="secno">01 / DATA</div>
+  <h2>数据现状：一条上线 22 小时的视频</h2>
+  <div class="mrow">
+    <div class="m"><div class="v">156</div><div class="k">播放量</div><div class="s">超过 55% 同类 · 正常</div></div>
+    <div class="m"><div class="v">71</div><div class="k">官方流量助推</div><div class="s">占总播放 45.5%</div></div>
+    <div class="m"><div class="v">17.5s</div><div class="k">平均播放时长</div><div class="s">人均观看时长</div></div>
+    <div class="m"><div class="v">45.5%</div><div class="k">2 秒跳出率</div><div class="s bad">近半观众 2 秒内划走</div></div>
+    <div class="m"><div class="v">22.7%</div><div class="k">整体完播率</div><div class="s sup">留人能力尚可</div></div>
+  </div>
+  <div class="mrow" style="margin-top:0">
+    <div class="m"><div class="v">2 / 2</div><div class="k">点赞 / 评论</div><div class="s">点赞率 1.3%，低于 3% 健康线</div></div>
+    <div class="m"><div class="v">0</div><div class="k">分享 / 收藏 / 涨粉</div><div class="s bad">零转发零涨粉</div></div>
+    <div class="m"><div class="v">0%</div><div class="k">封面点击率</div><div class="s bad">待提升</div></div>
+    <div class="m"><div class="v">2.6%</div><div class="k">互动率</div><div class="s sup">平台评级“优秀”</div></div>
+    <div class="m"><div class="v">36.4%</div><div class="k">5 秒完播率</div><div class="s sup">开头吸引力“优秀”</div></div>
+  </div>
+  <div class="note">口径说明：本报告“数据窗口 ≈22 小时”指<strong>作品已上线时长</strong>（发布 09-20 21:03 → 截图 09-21 18:49），不是视频本身时长（约 50-77 秒），也不是“平均播放时长”指标（每位观众人均看了 17.5 秒）。</div>
+
+  <figure>
+    <div class="figwrap">
+      <svg viewBox="0 0 680 220" width="100%" role="img" aria-label="播放漏斗">
+        <g font-family="Cascadia Mono,Consolas,monospace" font-size="12" fill="#141414">
+          <text x="0" y="16">播放 156</text>
+          <rect x="0" y="24" width="620" height="26" fill="#141414"/>
+          <text x="0" y="76">2s 留存 ≈85（54.5%）</text>
+          <rect x="0" y="84" width="338" height="26" fill="#3A3A36"/>
+          <text x="0" y="136">5s 完播 ≈57（36.4%）</text>
+          <rect x="0" y="144" width="227" height="26" fill="#5A5A54"/>
+          <text x="0" y="196">完播 ≈35（22.7%）→ 点赞 2 · 评论 2</text>
+          <rect x="0" y="204" width="139" height="12" fill="#B42318"/>
+        </g>
+      </svg>
+      <figcaption>图 1 · 曝光→行为漏斗（按截图百分比折算）。漏斗上游没崩：5 秒完播 36.4% 是“优秀”；崩在最后一格——156 个播放只产出 4 次互动，系统拿不到继续加推的信号。</figcaption>
+    </div>
+  </figure>
+
+  <table>
+    <thead><tr><th>指标</th><th>本次数据</th><th>参考线</th><th>解读</th></tr></thead>
+    <tbody>
+      <tr><td>播放量</td><td class="num">156（含助推 71）</td><td class="num">历史峰值 3000+</td><td>有机播放仅 ≈85；历史峰值含恢复更新后的系统探索试投流量，不可直接对比</td></tr>
+      <tr><td>2 秒跳出率</td><td class="num">45.5%</td><td class="num">&lt;30%</td><td>入口效率是当前最痛的洞，一半曝光被浪费</td></tr>
+      <tr><td>5 秒完播率</td><td class="num">36.4%</td><td class="num">&gt;35%</td><td>达标（烛龙条曾做到 45.6%，仍有空间）</td></tr>
+      <tr><td>整体完播率</td><td class="num">22.7%</td><td class="num">&gt;30%</td><td>接近健康线，说明中段留人没问题</td></tr>
+      <tr><td>点赞率</td><td class="num">1.3%</td><td class="num">&gt;3%</td><td>绝对值 2 个赞——算法无法据此加推</td></tr>
+      <tr><td>封面点击率</td><td class="num">0%</td><td class="num">&gt;5%</td><td>个人主页 / 搜索 / 合集场景几乎不产生点击</td></tr>
+      <tr><td>涨粉转化</td><td class="num">0</td><td class="num">&gt;0</td><td>结尾缺少可执行的关注理由</td></tr>
+    </tbody>
+  </table>
+  <p class="mut">观众画像（后台）：男性 78%｜31-40 岁 30%（最大年龄段）｜广东居多｜兴趣“影视娱乐”50%｜19-24 点活跃 87.5%｜观看时长 45 分钟以上的重度用户 100%。这是一群夜间刷剧的重度男频观众，内容钩子与发布时间都应围绕他们设计。</p>
+</section>
+
+<section>
+  <div class="secno">02 / VERDICT</div>
+  <h2>限流判定：证据不支持</h2>
+  <div class="verdict">
+    <div class="tag">CONCLUSION</div>
+    <h3>账号大概率未被限流，无需申诉洗号</h3>
+    <p style="max-width:48em;margin-bottom:6px">限流的典型特征是：播放量断崖到两位数且长期不动、无任何官方助推、作品诊断亮红、违规查询有处罚记录、作品推广不可投。本次样本五项全部不符。</p>
+    <span class="badge ok">作品质量：正常</span><span class="badge ok">助推：仍在发放</span><span class="badge ok">诊断：流量正常</span><span class="badge warn">待观察：连续 2 周数据</span>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>证据</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>作品页显示绿色“作品质量正常”徽章</td><td>被处罚 / 被减少推荐的作品会显示“质量异常”或直接无徽章</td></tr>
+      <tr><td class="num">2</td><td>官方流量助推累计 71 次，触发原因“上周发布 3 篇及以上优质作品”</td><td>限流账号通常被排除在助推、活动、推广等官方流量计划之外</td></tr>
+      <tr><td class="num">3</td><td>平台五维诊断：流量效果“正常”，超过 55% 同类作品</td><td>156 播放在同类作品里处于中位，不是被压到地板的形态</td></tr>
+      <tr><td class="num">4</td><td>5 秒完播率获评“优秀”，互动率获评“优秀”</td><td>内容侧未被判定低质；短板集中在入口（封面/2 秒跳出）</td></tr>
+    </tbody>
+  </table>
+  <div class="note">什么情况才需要怀疑限流：连续 2 周以上、多条作品播放稳定 &lt;50 且无助推、违规查询出现处罚记录、作品推广提示“不符合推广条件”。届时再走第 04 节的申诉路径。</div>
+</section>
+
+<section>
+  <div class="secno">03 / CAUSES</div>
+  <h2>流量去哪了：四个真实原因</h2>
+  <div class="cause"><div class="n">1</div><div>
+    <h4>老号重启的探索流量退坡（主因）</h4>
+    <p>账号用了好几年但长期低频更新，系统里没有可用的近期内容标签。恢复更新后，平台对新发作品给一轮探索性试投（3000+ 峰值来源于此），同时会推给历史粉丝——老粉兴趣画像与山海经内容不匹配，反馈差会拖累推荐分。探索期一过，分发回到真实数据驱动：初始池变小、数据不够好不晋级。重启首几条 3000+ → 现在 100+ 是「重启红利退坡」的标准曲线，不是处罚曲线；系统会按新观众的实际反馈重新校正人群包，同系列连续投喂 2-3 周会自然换过来。账号年龄、实名、零违规记录都是资产，<strong>不要注销重开，也不要买“清粉”服务</strong>。</p>
+  </div></div>
+  <div class="cause"><div class="n">2</div><div>
+    <h4>互动绝对值太小，喂不动推荐</h4>
+    <p>156 播放 → 2 赞 2 评 0 转 0 藏。算法晋级看的是互动信号是否越过阈值，而小基数下即使互动率达标（2.6% 被评为“优秀”），绝对信号量也不足以触发加推。于是形成“播放少 → 互动绝对值少 → 更不加推”的循环。破局点不在互动率，在把入口流量做大（2 秒跳出、封面点击）。</p>
+  </div></div>
+  <div class="cause"><div class="n">3</div><div>
+    <h4>老号标签失效 + 选题漂移</h4>
+    <p>账号标签靠“同一类内容反复投喂”建立。长期不发内容的老号，历史标签已失效，重启等于标签从零积累，而且首几条作品会先按旧人群包（历史粉丝）试投。已验证的系列是山海经古典异兽（糖画匠→烛龙→白泽）；本条《婴儿哭声钓鱼》若属自创现代奇谈而非古典出处系列，系统需要重新探索“该推给谁”，匹配精度下降，初始分发更保守。新题材要么并入系列逻辑，要么固定为独立合集持续投喂，不要与主线穿插。</p>
+  </div></div>
+  <div class="cause"><div class="n">4</div><div>
+    <h4>平台对批量 AI 内容的整体收紧（背景因素）</h4>
+    <p>2026 年起快手对 AI 魔改、低质同质化内容开展常态化治理，“重复感”治理明确压低模板化批量内容的推荐上限。本号三重 AI 标识合规（画面角标 + 元数据 + 发布声明）是长期加分项，但画面模板复用程度越高，越容易被归入“同质化”池子。对策是模板保效率、选题与开头保差异。</p>
+  </div></div>
+</section>
+
+<section>
+  <div class="secno">04 / SOP</div>
+  <h2>账号自查 SOP：15 分钟跑完</h2>
+  <ol class="steps">
+    <li><div><b>违规查询（账号级 + 作品级）</b><br><span class="path">快手 App → 左上角三 → 更多 → 创作者中心 → 违规查询</span><br>逐条看一个月内有无账号或视频处罚记录，有则记下原因与申诉入口。</div></li>
+    <li><div><b>账号诊断</b><br><span class="path">三 → 客服中心 → 账号诊断</span><br>系统自动给出账号与近期视频的健康结论及整改建议。</div></li>
+    <li><div><b>系统通知排查</b><br><span class="path">消息页 → 创作服务通知 / 系统私信</span><br>限流、降权、减少推荐一般会有官方消息，不会只默默压流量。</div></li>
+    <li><div><b>作品推广试投（强判据）</b><br><span class="path">任一作品 → 上热门 / 作品推广，最低金额</span><br>能正常进入投放 = 内容未被标记违规；提示“不符合推广条件” = 该作品被判定违规，是限流判断最硬的信号。</div></li>
+    <li><div><b>资料营销词排查</b><br><span class="path">个人主页 → 编辑资料</span><br>昵称、头像、简介、背景图不得含广告词、二维码、微信号等站外引流信息。</div></li>
+    <li><div><b>可见性交叉验证</b><br><span class="path">用另一台设备 / 他人账号，搜索作品标题并进入主页</span><br>核对作品对外是否可见、搜索能否命中，排除“仅自己可见 / 搜索屏蔽”。</div></li>
+    <li><div><b>对照实验</b><br>发一条与本号内容无关的普通实拍短内容（15 秒内），观察 24 小时初始播放。若普通内容能到 200-500 而系列内容只有几十，问题在内容标签匹配而非账号权重。</div></li>
+    <li><div><b>申诉（仅在有处罚记录时）</b><br><span class="path">违规通知页 → 申诉，或 创作者中心 → 客服 → 人工</span><br>写清内容原创性、AI 三重标识合规情况，附素材工程文件截图，1-3 个工作日出结果。</div></li>
+    <li><div><b>整改纪律（若确认被限）</b><br>隐藏 / 删除违规作品，之后 7-14 天只发高质量原创内容正常更新；不要注销重开、不要买粉互刷、不要频繁删稿重发——这些本身就会触发风控。</div></li>
+  </ol>
+</section>
+
+<section>
+  <div class="secno">05 / ACTIONS</div>
+  <h2>改进措施：按优先级执行</h2>
+  <div class="note">主线判断：继续发视频占八成权重——“发视频”本身就是老号重建标签的唯一手段；账号经营只做轻量四件事（简介一次系列化改写、合集归档置顶、固定话题标签、评论秒回），不做买粉、互赞群、清粉服务、注销重开。</div>
+  <table>
+    <thead><tr><th>优先级</th><th>动作</th><th>怎么做</th><th>验收指标</th></tr></thead>
+    <tbody>
+      <tr><td class="num">P0 本周</td><td>跑完自查 SOP</td><td>第 04 节 9 步，重点第 1、2、4 步</td><td>确认零处罚记录</td></tr>
+      <tr><td class="num">P0 本周</td><td>重构前 2 秒</td><td>首镜直接上最炸画面（怪物上钩 / 异兽睁眼瞬间），禁空镜、禁慢推、禁片头字卡；钩子画面前置到 0-2 秒</td><td>2s 跳出 45.5% → &lt;30%</td></tr>
+      <tr><td class="num">P0 本周</td><td>封面改版</td><td>主体特写占满画面 + 4-6 字悬念短语，弃全标题铺字；同一条视频 A/B 两版封面各跑 48 小时</td><td>封面点击率 0% → &gt;5%</td></tr>
+      <tr><td class="num">P0 本周</td><td>选题回归系列</td><td>山海经 / 古典出处连续更新；新题材固定为独立合集，不与主线穿插</td><td>连续 5 条同系列</td></tr>
+      <tr><td class="num">P1 下周</td><td>发布时间钉死 19:00-19:30</td><td>87.5% 观众 19-24 点活跃；本次 21:03 发布浪费了黄金冷启动窗口的前半段。落地方法：周末批量产 3-7 条成片进草稿箱，每天 19:00-19:30 定时放一条（快手发布页支持定时发布），生产节奏不再追着发布时间跑</td><td>连续 7 条准点发布</td></tr>
+      <tr><td class="num">P1 下周</td><td>历史作品聚焦</td><td>与现方向完全无关的历史作品，每天设私密 1-2 条逐步清理（不批量删、不频繁改资料），让主页与标签推荐更聚焦当前系列</td><td>主页内容方向统一</td></tr>
+      <tr><td class="num">P1 下周</td><td>维持助推触发条件</td><td>每周 ≥3 条优质更新（本次 71 次助推正是这个条件触发的，不能断更）</td><td>每周助推不归零</td></tr>
+      <tr><td class="num">P1 下周</td><td>互动工程</td><td>结尾给明确的点赞理由 + 关注理由（“白泽保你逢凶化吉，明天讲九尾狐”式）；发布后 5 分钟自评置顶扣 1 问题；评论 10 分钟内秒回</td><td>单条赞评 ≥10</td></tr>
+      <tr><td class="num">P1 下周</td><td>标签工程</td><td>固定 4-5 个赛道话题标签；简介写明系列定位；合集功能用起来，把“山海经”合集置顶</td><td>同类推荐占比上升</td></tr>
+      <tr><td class="num">P2 持续</td><td>换数据口径</td><td>重启期前 10-20 条不做账号结论（自家既定纪律）；用“超过同类百分比”替代绝对播放看趋势</td><td>同类分位 &gt;60%</td></tr>
+      <tr><td class="num">P2 持续</td><td>每条 24h 五维复盘</td><td>沿用现有流程，重点盯 2s 跳出与封面点击两个入口指标</td><td>入口指标逐条改善</td></tr>
+    </tbody>
+  </table>
+  <div class="note">不要做的事：不注销重开账号、不买粉不互刷、不频繁删稿重发、不搬运 / AI 魔改影视素材、不在简介挂联系方式。这些行为本身是风控触发器，比“疑似限流”更容易真的限流。</div>
+</section>
+
+<section>
+  <div class="secno">06 / WATCHLIST</div>
+  <h2>观察指标与预期</h2>
+  <div class="dim"><span class="name">有机播放</span><span class="bar"><i style="width:18%"></i></span><span class="val">现 ≈85/条 → 目标 300-500/条（剔除助推）</span></div>
+  <div class="dim"><span class="name">2s 跳出</span><span class="bar"><i class="low" style="width:45%"></i></span><span class="val">45.5% → &lt;30%</span></div>
+  <div class="dim"><span class="name">封面点击</span><span class="bar"><i class="low" style="width:4%"></i></span><span class="val">0% → &gt;5%</span></div>
+  <div class="dim"><span class="name">点赞率</span><span class="bar"><i style="width:13%"></i></span><span class="val">1.3% → &gt;3%</span></div>
+  <div class="dim"><span class="name">涨粉</span><span class="bar"><i class="low" style="width:3%"></i></span><span class="val">0 → 每条 ≥1（结尾预告 + 关注理由）</span></div>
+  <p style="margin-top:16px">判定规则：自查全绿的前提下，若改进版第 3-5 条有机播放回升到 300-500 且点赞率过 3%，定性为“内容与标签问题”，继续迭代即可；若连续 2 周、多条作品播放稳定 &lt;50、无助推且推广不可投，才升级为“疑似账号处罚”，走申诉路径。历史峰值 3000+ 是重启探索流量数据，不是日常基线，修复预期先对标 500-1000。老粉不匹配是阵痛不是绝症：系统按新观众反馈重校人群包通常需要 2-3 周同系列投喂，期间用「超过同类百分比」看趋势即可。</p>
+</section>
+
+<div class="foot">
+  <span>数据来源：快手 App 作品分析截图（2026-09-21 18:49）</span>
+  <span>账号背景由用户补充（2026-09-21）：数年老号 · 长期低频更新</span>
+  <span>背景资料：快手AI漫剧生成方法总结.md（2026-09-19）</span>
+  <span>生成：AutoClaw · 2026-09-21</span>
+</div>
+
+</div>
+</body>
+</html>

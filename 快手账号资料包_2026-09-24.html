@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>快手账号资料包 · 作品台账与账号介绍</title>
+<style>
+  :root{
+    --paper:#faf7f1;
+    --ink:#1d1a16;
+    --ink-soft:#5c554a;
+    --hairline:#d9d1c3;
+    --hairline-dark:#b8ad9a;
+    --accent:#96382b;
+    --accent-soft:#e8ddd2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{background:var(--paper);}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+    color:var(--ink);
+    font-size:15px;
+    line-height:1.7;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:56px 40px 72px;}
+  .serif{font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif;}
+
+  /* ---------- header ---------- */
+  header{border-bottom:1px solid var(--hairline-dark);padding-bottom:28px;margin-bottom:40px;}
+  .kicker{
+    font-size:12px;letter-spacing:.14em;color:var(--accent);
+    text-transform:uppercase;margin-bottom:14px;
+  }
+  h1{
+    font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:36px;font-weight:600;line-height:1.2;letter-spacing:.01em;
+    margin-bottom:12px;
+  }
+  .lede{font-size:15px;color:var(--ink-soft);max-width:640px;}
+  .meta-row{
+    margin-top:22px;display:flex;flex-wrap:wrap;gap:0 36px;
+    font-size:13px;color:var(--ink-soft);
+  }
+  .meta-row b{color:var(--ink);font-weight:550;}
+
+  /* ---------- sections ---------- */
+  section{margin-top:52px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--hairline);padding-bottom:12px;margin-bottom:22px;}
+  .sec-no{
+    font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:15px;color:var(--accent);letter-spacing:.06em;
+  }
+  h2{
+    font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:22px;font-weight:600;letter-spacing:.01em;
+  }
+  .sec-note{margin-left:auto;font-size:12px;color:var(--ink-soft);}
+  p.prose{max-width:660px;margin-bottom:14px;}
+  p.prose:last-child{margin-bottom:0;}
+  .muted{color:var(--ink-soft);}
+  em.term{font-style:normal;border-bottom:1px solid var(--hairline-dark);}
+
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 10px;}
+  th{
+    text-align:left;font-weight:550;font-size:12px;letter-spacing:.05em;color:var(--ink-soft);
+    border-bottom:1px solid var(--hairline-dark);padding:8px 10px;white-space:nowrap;
+  }
+  td{border-bottom:1px solid var(--hairline);padding:9px 10px;vertical-align:top;}
+  tr:last-child td{border-bottom:1px solid var(--hairline-dark);}
+  td.num{font-variant-numeric:tabular-nums;}
+  .good{color:#3d6b3f;}
+  .warn{color:var(--accent);}
+  .dash{color:var(--hairline-dark);}
+  .tbl-caption{font-size:12px;color:var(--ink-soft);margin:2px 0 0;}
+
+  /* ---------- bio block ---------- */
+  .bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:8px 0 6px;}
+  .bio-block{border-top:2px solid var(--ink);padding-top:14px;}
+  .bio-block.alt{border-top:2px solid var(--hairline-dark);}
+  .bio-tag{font-size:12px;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:12px;}
+  .bio-text{
+    font-family:"Noto Serif SC","Source Han Serif SC","Songti SC",SimSun,serif;
+    font-size:19px;line-height:2.0;letter-spacing:.02em;
+  }
+  .bio-text .dot{color:var(--accent);}
+  .bio-note{font-size:12.5px;color:var(--ink-soft);margin-top:14px;line-height:1.6;}
+  @media (max-width:760px){.bio-grid{grid-template-columns:1fr;}}
+
+  /* ---------- list ---------- */
+  ul.plain{max-width:680px;margin:4px 0 0;padding-left:0;list-style:none;}
+  ul.plain li{padding:7px 0 7px 0;border-bottom:1px solid var(--hairline);font-size:14px;}
+  ul.plain li:last-child{border-bottom:1px solid var(--hairline-dark);}
+  ul.plain li b{font-weight:550;}
+  .li-no{color:var(--accent);font-size:12.5px;margin-right:10px;font-variant-numeric:tabular-nums;}
+
+  /* ---------- colophon ---------- */
+  footer{
+    margin-top:72px;border-top:1px solid var(--hairline-dark);padding-top:16px;
+    font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">快手运营资料包 · 2026-09-24</div>
+    <h1>作品台账 与 账号介绍（合规拟稿）</h1>
+    <p class="lede">本资料包覆盖两件事：其一，整理账号至今发布的全部视频与关键数据；其二，按已调研确认的平台红线，给出可直接使用的账号介绍（个人简介）文案与逐条合规自检。</p>
+    <div class="meta-row">
+      <span>账号状态 <b>V1 等级</b></span>
+      <span>在架作品 <b>6 条</b>（另有 3 条备货在途）</span>
+      <span>近 7 日播放 <b>4,149</b>（超 91% 同粉丝量创作者）</span>
+      <span>近 7 日净增粉 <b>18</b></span>
+      <span>平台助推 <b>127 播放 / 7 日</b>（官方评语：有上热门潜力）</span>
+    </div>
+  </header>
+
+  <section id="s1">
+    <div class="sec-head">
+      <span class="sec-no">壹</span>
+      <h2>我们做了哪些视频</h2>
+      <span class="sec-note">数据来源：快手作品数据.xlsx（9/24 创作者后台登录核对）</span>
+    </div>
+    <p class="prose">账号自 9/15 重启日更以来，共发布 <em class="term">6 条视频</em>，形成了「老手艺试水一条 → 山海经系列五条」的路径。数据呈现两个要点：流量没有崩——烛阴 3,120 → 黄帝 1,490 → 蛊雕 614 → 精卫 357 → 刑天 527，刑天在发布 16 小时内从 65 涨到 527，走势健康；真正的病灶集中在 <em class="term">2 秒跳出走高</em>（11.8% → 36.9%）与 <em class="term">标题分全线偏低</em>（44–48，文言句式机器与观众都看不懂）。</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34px">#</th>
+          <th>发布时间</th>
+          <th>作品</th>
+          <th>形态 / 时长</th>
+          <th>播放（至 9/24）</th>
+          <th>2 秒跳出</th>
+          <th>完播率</th>
+          <th>要点</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td><td class="num">9/15 22:59</td>
+          <td><b>糖画匠</b>（老手艺）</td><td>写实纪实 · 59s</td>
+          <td class="num">3,026</td><td class="num dash">—</td><td class="num">1.5%<sup>①</sup></td>
+          <td>第一条试水；播放最高但与账号定位不符（3,026 播放仅 1 赞），不再续做</td>
+        </tr>
+        <tr>
+          <td>2</td><td class="num">9/16</td>
+          <td><b>山海经 · 烛阴</b></td><td>AI 神话图鉴 · 53s</td>
+          <td class="num">3,120</td><td class="num good">11.8%</td><td class="num">13.4%</td>
+          <td>系列最佳：流量超 83% 同类、画质分 85；开场反常识双钩子（睁眼为昼 / 闭眼为夜）验证有效</td>
+        </tr>
+        <tr>
+          <td>3</td><td class="num">9/19</td>
+          <td><b>山海经 · 黄帝遇白泽</b></td><td>AI 神话图鉴 · <span class="dash">—</span></td>
+          <td class="num">1,490</td><td class="num warn">36.9%</td><td class="num dash">—</td>
+          <td>画质分 88（最高）；开场偏弱致跳出偏高；标题分 48</td>
+        </tr>
+        <tr>
+          <td>4</td><td class="num">9/20 21:03</td>
+          <td><b>它用婴儿的哭声钓鱼</b>（蛊雕 · 悬疑）</td><td>悬疑试水 · 77s</td>
+          <td class="num">614</td><td class="num warn">42.3%</td><td class="num">14.1%</td>
+          <td>获平台助推 +71（条件：上周 ≥3 篇优质作品）；女性观众约 42%（系列最高）——已决定悬疑内容后续分账号运营</td>
+        </tr>
+        <tr>
+          <td>5</td><td class="num">9/22 23:51</td>
+          <td><b>山海经 · 精卫</b></td><td>AI 神话图鉴 · 36s</td>
+          <td class="num">357</td><td class="num">32.7%</td><td class="num warn">4.1%</td>
+          <td>深夜发布踩坑（官方诊断比往期均值低 55%）；标题分 44——确认 19:00–19:30 黄金时段铁律</td>
+        </tr>
+        <tr>
+          <td>6</td><td class="num">9/23 19:30</td>
+          <td><b>山海经 · 刑天</b></td><td>AI 漫剧（角色对白版） · 67.6s</td>
+          <td class="num">527</td><td class="num warn">38.2%</td><td class="num">0%<sup>②</sup></td>
+          <td>发布 16h 从 65 涨到 527，晚高峰起飞；结尾违规话术（扣 1 / 扣 2）发布前已改为开放式提问合规版</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="tbl-caption">① 糖画匠完播率为 9/21 诊断口径。② 刑天完播率取发布 16h 截图值，数据显示为统计中。</p>
+
+    <p class="prose" style="margin-top:18px"><b>备货在途（3 条）：</b></p>
+    <ul class="plain">
+      <li><span class="li-no">01</span><b>女魃</b>（62.4s）——第 12 镜「扣 1 同情 / 扣 2 活该」已改为合规开放式提问；标题按新规范改为白话悬念体；定于 <b>今晚 19:00–19:30</b> 发布，与刑天构成「白话标题是否救回流量」的对照。</li>
+      <li><span class="li-no">02</span><b>相柳</b>（42.6s）——8 镜已备货（《海外北经》禹杀相柳）；标题同样白话化；血腥度需在成片复核后再发。</li>
+      <li><span class="li-no">03</span><b>应龙</b>——下一条选题（相柳结尾预告承接）。</li>
+      <li><span class="li-no">备注</span><b>九尾狐</b>——9/23 日志记录「已发布」，但 9/24 后台核对仅见 6 条在架作品，<b>发布状态待人工确认</b>。</li>
+    </ul>
+  </section>
+
+  <section id="s2">
+    <div class="sec-head">
+      <span class="sec-no">贰</span>
+      <h2>账号介绍（拟稿）</h2>
+      <span class="sec-note">现状：账号当前无系列化简介，本次为首次系列化改写</span>
+    </div>
+    <p class="prose">账号定位是「<em class="term">AI 神话图鉴</em>」——只做《山海经》等古典典籍里有原文出处的异兽，一条视频一只兽。简介要让刷到主页的观众三秒内看懂三件事：<b>讲什么、为什么可信、什么时候来</b>。同时满足已确认的平台红线：不含广告词、二维码、微信号等任何引流信息，且明示 AI 生成属性。按 9/24 的决策，本号只挂山海经定位，悬疑内容另起账号、不在简介中提及。</p>
+
+    <div class="bio-grid">
+      <div class="bio-block">
+        <div class="bio-tag">主推版 · 建议直接采用</div>
+        <div class="bio-text">
+          每晚七点，讲一位《山海经》里的异兽。<br>
+          每只都有原文出处，有据可查。<br>
+          AI 生成<span class="dot"> · </span>内容原创
+        </div>
+        <div class="bio-note">对应「讲什么 / 为什么可信 / 什么时候来」三问；「原文出处」承接每条视频的引用原文卖点；「AI 生成」明示与发布页 AI 声明、画面角标、元数据三重标识呼应。</div>
+      </div>
+      <div class="bio-block alt">
+        <div class="bio-tag">备选短版 · 若简介有字数限制</div>
+        <div class="bio-text">
+          只讲有原文出处的<br>山海经异兽<span class="dot">｜</span>AI 生成<br>每晚七点更新
+        </div>
+        <div class="bio-note">单行压缩版，保留垂直定位 + AI 明示 + 更新时间三个合规要素，信息无损。</div>
+      </div>
+    </div>
+
+    <p class="prose" style="margin-top:22px">配套建议：昵称、头像、背景图与简介一次性改成同一套系列视觉，改完 <em class="term">30 天不动</em>——频繁改资料是已确认的负资产动作；简介改写后不加二维码图、不挂外链、不写「加微信」「进群」类话术。</p>
+  </section>
+
+  <section id="s3">
+    <div class="sec-head">
+      <span class="sec-no">叁</span>
+      <h2>合规自检：介绍逐条对照</h2>
+      <span class="sec-note">依据：老号重启诊断 SOP · AI 漫剧生成方法总结 · 对标调研增补</span>
+    </div>
+    <table>
+      <thead>
+        <tr><th style="width:60px">结论</th><th>检查项</th><th>拟稿落点</th><th>规则来源</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="good">通过</td><td>无站外引流：不含二维码、微信号、QQ、其他平台名</td><td>文案仅描述内容与更新时间，零引流信息</td><td>重启诊断 SOP 第 5 条（资料排查）</td></tr>
+        <tr><td class="good">通过</td><td>无广告营销词：不含「加 V / 私聊 / 低价 / 代理」类</td><td>无任何商业话术</td><td>重启诊断 SOP 第 5 条</td></tr>
+        <tr><td class="good">通过</td><td>AI 内容透明：不伪装实拍</td><td>简介明示「AI 生成」，与视频三重标识（画面角标 + 元数据 + 发布页 AI 声明）呼应</td><td>生成方法总结第四节；平台 2026 起 AI 内容治理收紧</td></tr>
+        <tr><td class="good">通过</td><td>内容与资料一致，无「假纪实」举报风险</td><td>只挂山海经神话定位；神话题材不冒充现实事件，且 AI 属性已声明</td><td>生成方法总结第一节；9/24 分账号决策</td></tr>
+        <tr><td class="good">通过</td><td>原创性表述：不搬运、不冒用</td><td>「内容原创」与事实相符（自产脚本 + AI 生成画面）；引用的《山海经》原文为公版</td><td>对标调研报告第五节（原创保护）</td></tr>
+        <tr><td class="good">通过</td><td>不承诺无法兑现或诱导性话术</td><td>「每晚七点」与既定发布窗口（19:00–19:30）一致，属可执行口径</td><td>经营策略表（发布时间钉死 19:00–19:30）</td></tr>
+        <tr><td class="good">通过</td><td>垂直一致：简介、内容、标签同一体系</td><td>简介 = 山海经图鉴；话题标签固定 #山海经 #异兽名 #AI经典奇谈 #神话</td><td>生成方法总结第一节（算法打标签依赖一致性）</td></tr>
+        <tr><td class="good">通过</td><td>资料稳定性：一次改好，避免频繁变更</td><td>改写后 30 天不动，仅随分账号调整时复核一次</td><td>经营策略表第 ④ 条</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="s4">
+    <div class="sec-head">
+      <span class="sec-no">肆</span>
+      <h2>视频端已落地的合规机制（备忘）</h2>
+    </div>
+    <ul class="plain">
+      <li><span class="li-no">01</span><b>互动引导禁用「扣 1 / 扣 2」</b>——账号有处罚前科；所有结尾与置顶评论一律改为开放式提问（如「你觉得她值得同情吗？」）。</li>
+      <li><span class="li-no">02</span><b>AI 三重标识</b>——画面右上角「AI 生成」角标 + 文件元数据隐式标识 + 发布页勾选 AI 生成声明。</li>
+      <li><span class="li-no">03</span><b>内容红线</b>——低俗、血腥、政治影射不做；相柳（禹杀相柳）成片发布前需专项复核血腥度；评论区回复不接政治影射话题。</li>
+      <li><span class="li-no">04</span><b>标题与描述</b>——弃文言句式改白话悬念体（标题分 44–48 已成流量瓶颈）；描述引公版原文出处，既保原创性又无版权风险。</li>
+      <li><span class="li-no">05</span><b>发布纪律</b>——黄金时段 19:00–19:30、日更不断更、话题标签逐个从候选里敲、挂错活动宁可不挂。</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>快手账号资料包 · 内容创作 · 2026-09-24</span>
+    <span>数据截至 9/24 创作者后台核对；女魃、相柳数据待发布后回填</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from app.config.settings import settings
 from app.config.database import engine, Base
 from app.config.logging_config import setup_logging
-from app.api import projects, chapters, knowledge, publish, config_api, ws, hot_topics, covers
+from app.api import projects, chapters, knowledge, publish, config_api, ws, hot_topics, covers, sieve
 from app.api.v1.video import api_router as video_api_router
 import os
 import logging
@@ -29,6 +29,8 @@ async def lifespan(app: FastAPI):
     os.makedirs(settings.COVERS_DIR, exist_ok=True)
     os.makedirs(settings.VIDEOS_DIR, exist_ok=True)
     os.makedirs(settings.BGM_DIR, exist_ok=True)
+    # sieve 抓取交付文件目录（未配置 SIEVE_API_KEY 时也只是个空目录）
+    os.makedirs(settings.SIEVE_FILES_DIR, exist_ok=True)
     # 启动模型配置热加载监听（spec 5.5.1 规则 4 / design 1.3.6）
     from app.services.config_service import ConfigService
     ConfigService.start_watching()
@@ -59,6 +61,7 @@ app.include_router(publish.router, prefix=settings.API_PREFIX)
 app.include_router(config_api.router, prefix=settings.API_PREFIX)
 app.include_router(hot_topics.router, prefix=settings.API_PREFIX)
 app.include_router(covers.router, prefix=settings.API_PREFIX)
+app.include_router(sieve.router, prefix=settings.API_PREFIX)
 app.include_router(ws.router)
 app.include_router(video_api_router, prefix=settings.API_PREFIX)
 

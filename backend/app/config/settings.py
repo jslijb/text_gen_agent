@@ -24,6 +24,14 @@ class Settings(BaseSettings):
 
     COOKIE_ENCRYPTION_KEY: str = os.getenv("COOKIE_ENCRYPTION_KEY", "default-key-change-in-production-32b!")
 
+    # sieve 抓取 API（https://scrape.usesieve.com）——密钥存 backend/.env，随 env_file 注入
+    # backend / worker / beat 三个容器。未配置时 SIEVE_API_KEY 为空，抓取相关功能整体关闭，
+    # 其余功能不受影响（见 app/services/sieve_client.py）。
+    SIEVE_BASE_URL: str = os.getenv("SIEVE_BASE_URL", "https://scrape.usesieve.com")
+    SIEVE_API_KEY: str = os.getenv("SIEVE_API_KEY", "")
+    # sieve 交付文件（files[]）落盘目录，与 novels/cookies 同级放在 data/ 下
+    SIEVE_FILES_DIR: str = str(Path(__file__).parent.parent.parent.parent / "data" / "sieve")
+
     CELERY_BROKER_URL: str = "redis://localhost:6379/1"
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/2"
 

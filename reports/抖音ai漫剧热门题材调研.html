@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抖音 AI 漫剧热门题材调研 · 2026 年 10 月</title>
+<style>
+  :root{
+    --bg:#f2f2ef;
+    --paper:#fbfbf9;
+    --ink:#1d1d21;
+    --ink-2:#56565c;
+    --ink-3:#8e8e93;
+    --hair:#dad9d2;
+    --hair-dark:#b3b2aa;
+    --accent:#b23a4e;
+    --mono:Consolas,"Courier New",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+    font-size:15.5px;
+    line-height:1.78;
+  }
+  .page{
+    max-width:1280px;
+    margin:0 auto;
+    padding:56px 40px 72px;
+  }
+  /* ---------- masthead ---------- */
+  .kicker{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.08em;
+    color:var(--ink-2);
+    text-transform:uppercase;
+  }
+  .kicker .dot{color:var(--accent)}
+  h1{
+    font-size:46px;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.15;
+    margin:18px 0 14px;
+  }
+  .sub{
+    font-size:16px;
+    color:var(--ink-2);
+    max-width:46em;
+  }
+  .masthead{border-bottom:2px solid var(--ink);padding-bottom:28px}
+  .lede{
+    font-size:17px;
+    line-height:1.85;
+    margin:30px 0 8px;
+    max-width:44em;
+  }
+  .lede strong{font-weight:600}
+  /* ---------- metrics row ---------- */
+  .metrics{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--hair-dark);
+    border-bottom:1px solid var(--hair-dark);
+    margin:30px 0 10px;
+  }
+  .m{
+    padding:16px 18px 14px;
+    border-left:1px solid var(--hair);
+  }
+  .m:first-child{border-left:none;padding-left:0}
+  .m-num{
+    font-family:var(--mono);
+    font-size:25px;
+    letter-spacing:-0.01em;
+    line-height:1.2;
+  }
+  .m-label{font-size:12.5px;color:var(--ink);margin-top:4px;font-weight:510}
+  .m-note{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+  .src-line{font-size:11.5px;color:var(--ink-3);font-family:var(--mono);letter-spacing:.02em}
+  /* ---------- layout with toc ---------- */
+  .layout{
+    display:grid;
+    grid-template-columns:196px minmax(0,1fr);
+    gap:56px;
+    margin-top:44px;
+  }
+  nav.toc{
+    position:sticky;
+    top:36px;
+    align-self:start;
+    font-size:12.5px;
+    border-left:1px solid var(--hair-dark);
+    padding-left:16px;
+  }
+  nav.toc .toc-title{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.1em;
+    color:var(--ink-3);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  nav.toc a{
+    display:block;
+    color:var(--ink-2);
+    text-decoration:none;
+    padding:4px 0;
+    line-height:1.5;
+  }
+  nav.toc a:hover{color:var(--ink)}
+  /* ---------- sections ---------- */
+  section{margin-bottom:52px}
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:10px;
+    margin-bottom:20px;
+  }
+  .sec-no{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+  }
+  h2{
+    font-size:24px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.25;
+  }
+  h3{
+    font-size:17px;
+    font-weight:600;
+    margin:26px 0 8px;
+  }
+  p{margin:0 0 14px;max-width:44em}
+  p.wide{max-width:none}
+  .note{
+    font-size:12.5px;
+    color:var(--ink-2);
+    border-top:1px solid var(--hair);
+    padding-top:10px;
+    margin-top:16px;
+    max-width:none;
+  }
+  /* ---------- bars ---------- */
+  .bars{margin:18px 0 6px}
+  .bar-row{
+    display:grid;
+    grid-template-columns:150px minmax(0,1fr) 110px;
+    gap:12px;
+    align-items:center;
+    padding:6px 0;
+  }
+  .bar-label{font-size:13px;color:var(--ink);text-align:right}
+  .bar-track{height:14px;background:transparent;border-bottom:1px solid var(--hair)}
+  .bar-fill{height:100%;background:var(--ink-2)}
+  .bar-fill.top{background:var(--accent)}
+  .bar-val{font-family:var(--mono);font-size:12px;color:var(--ink-2);white-space:nowrap}
+  .bars-title{font-size:13px;font-weight:510;margin:18px 0 4px}
+  /* ---------- tables ---------- */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+    line-height:1.65;
+    margin:16px 0 8px;
+  }
+  th{
+    text-align:left;
+    font-weight:510;
+    font-size:12.5px;
+    letter-spacing:.03em;
+    color:var(--ink);
+    border-top:2px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding:9px 12px 8px 0;
+    white-space:nowrap;
+  }
+  td{
+    border-bottom:1px solid var(--hair);
+    padding:10px 12px 10px 0;
+    vertical-align:top;
+    color:var(--ink);
+  }
+  td.dim{color:var(--ink-2)}
+  td.num{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+  table.plain th{border-top:1px solid var(--ink)}
+  /* ---------- two-col compare ---------- */
+  .split{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--hair-dark);
+    margin:18px 0 8px;
+  }
+  .split > div{padding:16px 20px 14px 0}
+  .split > div + div{border-left:1px solid var(--hair);padding-left:20px}
+  .split h4{
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .split h4 span{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-right:8px;letter-spacing:.06em}
+  .split ul{list-style:none}
+  .split li{
+    font-size:13.5px;
+    color:var(--ink-2);
+    padding:5px 0 5px 14px;
+    position:relative;
+    line-height:1.6;
+  }
+  .split li::before{
+    content:"";
+    position:absolute;
+    left:0;top:13px;
+    width:6px;height:1px;
+    background:var(--ink-3);
+  }
+  .split li strong{color:var(--ink);font-weight:510}
+  /* ---------- ordered trend list ---------- */
+  ol.trends{list-style:none;counter-reset:t;margin:14px 0 4px}
+  ol.trends li{
+    counter-increment:t;
+    position:relative;
+    padding:12px 0 12px 44px;
+    border-bottom:1px solid var(--hair);
+  }
+  ol.trends li::before{
+    content:"0" counter(t);
+    position:absolute;
+    left:0;top:13px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+  }
+  ol.trends li strong{font-weight:600}
+  ol.trends li .why{color:var(--ink-2);font-size:13.5px}
+  /* ---------- colophon ---------- */
+  .colophon{
+    border-top:2px solid var(--ink);
+    margin-top:24px;
+    padding-top:18px;
+    font-size:12.5px;
+    color:var(--ink-2);
+  }
+  .colophon .col-title{
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+    margin-bottom:10px;
+  }
+  .colophon ol{list-style:none;column-count:2;column-gap:40px}
+  .colophon li{
+    padding:4px 0;
+    line-height:1.55;
+    break-inside:avoid;
+  }
+  .colophon li .u{font-family:var(--mono);font-size:11px;color:var(--ink-3);word-break:break-all}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;gap:24px}
+    nav.toc{position:static;border-left:none;padding-left:0;display:none}
+    .metrics{grid-template-columns:repeat(2,1fr)}
+    .m{padding-left:0;border-left:none;border-top:1px solid var(--hair)}
+    .split{grid-template-columns:1fr}
+    .split > div + div{border-left:none;padding-left:0;border-top:1px solid var(--hair)}
+    h1{font-size:34px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <div class="kicker">市场调研<span class="dot"> · </span>抖音平台<span class="dot"> · </span>2026-10-02</div>
+    <h1>抖音 AI 漫剧热门题材调研</h1>
+    <p class="sub">哪一类内容最受欢迎 —— 基于 2025–2026 年公开榜单、行业数据报告与媒体报道的交叉验证</p>
+  </header>
+
+  <p class="lede"><strong>核心结论：抖音最受欢迎的 AI 漫剧，本质是「漫起来的男频爽文 + 情绪短剧」。</strong>供给与流量基本盘是<strong>逆袭、都市日常、奇幻脑洞</strong>三条赛道；2026 下半年增速最快的新势力是<strong>末世系统流</strong>与<strong>年代赶山赶海流</strong>；女频侧<strong>萌宝团宠</strong>与<strong>大女主言情</strong>正在打开第二增长曲线，并跑通了「漫剧爆了 → 反向拍真人剧」的 IP 放大路径。</p>
+
+  <div class="metrics">
+    <div class="m">
+      <div class="m-num">757 亿</div>
+      <div class="m-label">2025 年漫剧全年播放量</div>
+      <div class="m-note">DataEye 口径 700 亿+，全年上新约 3.76 万部</div>
+    </div>
+    <div class="m">
+      <div class="m-num">≈70%</div>
+      <div class="m-label">抖音端原生占漫剧大盘份额</div>
+      <div class="m-note">快手 186 亿居第二（24.6%）</div>
+    </div>
+    <div class="m">
+      <div class="m-num">189.8 亿元</div>
+      <div class="m-label">2025 年 AI 漫剧市场规模</div>
+      <div class="m-note">同比 +276.3%，2030 年预计破 850 亿</div>
+    </div>
+    <div class="m">
+      <div class="m-num">6 : 4</div>
+      <div class="m-label">漫剧用户男女比例</div>
+      <div class="m-note">QuestMobile：男性偏好显著更高</div>
+    </div>
+  </div>
+  <p class="src-line">来源：DataEye《2025 年漫剧数据报告》 / 36 氪 / 艾媒咨询 / QuestMobile 2026 短剧行业洞察</p>
+
+  <div class="layout">
+
+    <nav class="toc">
+      <div class="toc-title">目录</div>
+      <a href="#s1">01 大盘：抖音的位置</a>
+      <a href="#s2">02 题材格局总览</a>
+      <a href="#s3">03 热门赛道拆解</a>
+      <a href="#s4">04 用户画像</a>
+      <a href="#s5">05 变现与成本</a>
+      <a href="#s6">06 趋势与入局判断</a>
+      <a href="#s7">07 数据口径与缺口</a>
+      <a href="#src">附：来源清单</a>
+    </nav>
+
+    <main>
+
+      <section id="s1">
+        <div class="sec-head"><span class="sec-no">01</span><h2>大盘：漫剧已成抖音内容主力之一</h2></div>
+        <p>2024 年抖音、快手出现「端原生漫剧」，2025 年是公认的爆发元年：全年播放量约 757 亿、上新约 3.76 万部，其中抖音端原生漫剧占整体漫剧市场近 70%。艾媒咨询口径下，2025 年 AI 漫剧市场规模 189.8 亿元、同比激增 276.3%，预计 2030 年突破 850 亿元。</p>
+        <p>AI 剧漫剧在榜单上的统治力还在加强：红果总榜 TOP100 中 AI 短剧占比从 5 月约五成升至 8 月的七八成；10 月抖音端原生漫剧播放量 TOP10 中，AI 漫剧占 5 席、沙雕漫 4 席、动态漫仅 1 席。8 月 AI 剧漫剧单月关联播放总量已达 1647 亿（影艺独舌统计口径）。</p>
+        <div class="bars-title">2025 年漫剧播放量平台分布</div>
+        <div class="bars">
+          <div class="bar-row">
+            <span class="bar-label">抖音端原生</span>
+            <div class="bar-track"><div class="bar-fill top" style="width:70%"></div></div>
+            <span class="bar-val">≈70%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">快手</span>
+            <div class="bar-track"><div class="bar-fill" style="width:24.6%"></div></div>
+            <span class="bar-val">24.6%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">其他平台</span>
+            <div class="bar-track"><div class="bar-fill" style="width:5.4%"></div></div>
+            <span class="bar-val">≈5.4%</span>
+          </div>
+        </div>
+        <p class="note">繁荣的另一面是极高的淘汰率：2026 上半年全网新上 AI 短剧 22.19 万部，播放破亿的仅 1055 部（爆款率 0.47%）；承制公司从 1216 家缩水到 698 家，约 90% 的 AI 短剧公司亏损，制作报价半年内跌去约 90%。题材选择因此成为生死决策，而不只是创作偏好。</p>
+      </section>
+
+      <section id="s2">
+        <div class="sec-head"><span class="sec-no">02</span><h2>题材格局：三条基本盘 + 两组新势力</h2></div>
+        <p>按「影艺独舌 / 界面新闻」对 AI 剧漫剧的月度统计，2025 年 7 月起新剧剧目数超过 5000 部的题材始终是<strong>逆袭、都市日常、现代、奇幻脑洞</strong>四类；8 月逆袭题材在播约 1.08 万部居首，都市日常约 8944 部、奇幻脑洞约 8905 部紧随其后。流量端，都市日常以单题材 672.47 亿的 8 月关联播放增量排第一。</p>
+
+        <div class="bars-title">8 月 AI 剧漫剧在播部数（部分头部题材）</div>
+        <div class="bars">
+          <div class="bar-row">
+            <span class="bar-label">逆袭</span>
+            <div class="bar-track"><div class="bar-fill top" style="width:100%"></div></div>
+            <span class="bar-val">≈10800 部</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">都市日常</span>
+            <div class="bar-track"><div class="bar-fill" style="width:82.8%"></div></div>
+            <span class="bar-val">≈8944 部</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">奇幻脑洞</span>
+            <div class="bar-track"><div class="bar-fill" style="width:82.5%"></div></div>
+            <span class="bar-val">≈8905 部</span>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr><th>赛道</th><th>热度证据</th><th>代表作</th><th>主要受众</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>逆袭（大男主）</strong></td>
+              <td class="dim">在播约 1.08 万部，供给量第一</td>
+              <td class="dim">半亩文剧社 788 集连载漫剧，抖音付费模式累计播放 35 亿（8 月单月 25 亿）</td>
+              <td class="dim">中年男性</td>
+            </tr>
+            <tr>
+              <td><strong>都市日常 / 职场情绪</strong></td>
+              <td class="dim">8 月关联播放增量 672.47 亿，单题材第一</td>
+              <td class="dim">《我年终奖 80W 降到 1W9，领导却慌了》《谁说纨绔不能当状元》</td>
+              <td class="dim">全年龄职场人群</td>
+            </tr>
+            <tr>
+              <td><strong>奇幻脑洞 / 玄幻修仙</strong></td>
+              <td class="dim">约 8905 部；连载化最成熟</td>
+              <td class="dim">《万妖图录传》全系列 60 亿+ 播放、连载七季，已官宣真人版</td>
+              <td class="dim">Z 世代男性</td>
+            </tr>
+            <tr>
+              <td><strong>末世系统 / 基建流</strong></td>
+              <td class="dim">10 月抖音端原生热播榜 TOP1 均为新剧，单月增量破亿</td>
+              <td class="dim">《我在末世当老板，员工全是 S 级变异体》《无尽寒冬：从点燃小火堆开始》</td>
+              <td class="dim">男频</td>
+            </tr>
+            <tr>
+              <td><strong>年代 / 赶山赶海流</strong></td>
+              <td class="dim">8 月抖音 AI 剧热播榜多赛道集中爆发</td>
+              <td class="dim">《1977 山猎重生，我以余生偿前错》《重回八零，赶山狩猎养妻女》</td>
+              <td class="dim">中年男性</td>
+            </tr>
+            <tr>
+              <td><strong>萌宝团宠</strong></td>
+              <td class="dim">红果 AI 漫剧热播榜 TOP30 占多席（9 月）</td>
+              <td class="dim">《糯糯下山，师兄们都慌了（第三季）》《咱家剑宗团宠小师妹》（数十亿播放）</td>
+              <td class="dim">女频 + 全年龄</td>
+            </tr>
+            <tr>
+              <td><strong>都市言情 / 大女主</strong></td>
+              <td class="dim">8 月百强榜「女频亮眼」；暑期档突破明显</td>
+              <td class="dim">《予你深情侵入余生》四季全网 50 亿+，真人版上线当日进红果 TOP5</td>
+              <td class="dim">女性</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">题材口径说明：以上为「AI 剧漫剧」合并统计（含 AI 漫剧与 AI 动态漫等）；抖音端内另有沙雕漫、AI 仿真人漫等形态分流榜单，10 月抖音漫剧 TOP10 中 AI 漫剧 5 席、沙雕漫 4 席。</p>
+      </section>
+
+      <section id="s3">
+        <div class="sec-head"><span class="sec-no">03</span><h2>热门赛道拆解：什么在火，为什么火</h2></div>
+
+        <h3>基本盘：逆袭 × 都市情绪 × 奇幻脑洞</h3>
+        <p>这三条赛道模型最成熟：真人短剧验证过的爽文公式平移到 AI 漫剧依然管用。行业复盘的共识是，爆款的的决定因素不是 AI 技术而是<strong>情绪价值</strong>——职场被打压、年终奖缩水、邻里纠纷、家庭亲情，都是低成本高共鸣的情绪开关。爆款公式 ≈ 好剧本 + 好角色 + 精准的情绪节奏。风险在于供给已严重饱和（逆袭在播超万部），拼的是剧本与投流效率。</p>
+
+        <h3>增量赛道一：末世系统流 / 基建流</h3>
+        <p>天灾囤货、末世求生、系统金手指这类题材需要大量奇观画面，正是 AI 制作相对真人实拍的优势区（真人拍不起的视觉场面，AI 用算力解决）。2026 年 10 月 3 日上线的《我在末世当老板，员工全是 S 级变异体》当月即冲进抖音端原生热播榜 TOP1，单月播放增量破亿；7 月的《无尽寒冬》以「末世生存 + 基建建设」双题材融合持续走高。</p>
+
+        <h3>增量赛道二：年代赶山赶海流</h3>
+        <p>8 月抖音 AI 剧热播榜上，赶山赶海 / 山猎题材集中爆发：《1977 山猎重生》《重回八零，赶山狩猎养妻女》等瞄准中年男性怀旧与隐忍逆袭情绪。这条赛道同时在抖音付费模式上跑通了商业闭环——小团队「半亩文剧社」以 788 集超长连载做到累计 35 亿播放、8 月单月 25 亿。</p>
+
+        <h3>女频突破：萌宝团宠 + 大女主言情</h3>
+        <p>早期漫剧七成是龙王、赘婿、战神类大男主题材，2026 年暑期档明确「女频亮眼」：萌宝团宠流全年龄通吃（红果 9 月 AI 漫剧榜 TOP30 萌宝团宠占多席，《糯糯下山》第三季登顶）；大女主言情出现 50 亿级案例。值得注意的是虎嗅指出的趋势——漫剧大女主的终极爽点是「无 CP」的事业双强叙事，而非传统言情。头部女频 IP 已开始「反向开发」：《予你深情侵入余生》漫剧四季播完 50 亿+ 后拍真人版《他深情侵入》，上线当日进红果热播榜 TOP5；《万妖图录传》《咱家剑宗团宠小师妹》也官宣真人化。</p>
+
+        <div class="split">
+          <div>
+            <h4><span>基本盘</span>男频爽文矩阵</h4>
+            <ul>
+              <li><strong>题材：</strong>逆袭、玄幻修仙、末世系统、年代赶山</li>
+              <li><strong>受众：</strong>男性约六成，18–40 岁为主力，下沉市场基本盘</li>
+              <li><strong>优势：</strong>模型成熟、变现链路清晰（付费 + 广告双轨）</li>
+              <li><strong>风险：</strong>供给饱和，爆款率仅 0.47%，红海竞争</li>
+            </ul>
+          </div>
+          <div>
+            <h4><span>增长极</span>女频新势力</h4>
+            <ul>
+              <li><strong>题材：</strong>萌宝团宠、大女主双强（无 CP 爽点）、都市言情</li>
+              <li><strong>受众：</strong>女性，真人短剧用户天然迁移（画像几乎镜像）</li>
+              <li><strong>优势：</strong>竞争相对缓和，已有 50 亿级案例与真人化改编出口</li>
+              <li><strong>风险：</strong>模型尚在早期，情绪尺度与审美门槛更高</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>头部形态：3D 化与连载化</h3>
+        <p>8 月红果 AI 剧漫剧百强榜几乎全是 3D 作品；另一条技术上走「AI 仿真人（写实画风）」的路线在部分热播榜中占比超 80%，年代逆袭与大女主双强是其流量双引擎。同时，头部作品全部走向长线连载：《万妖图录传》七季、《予你深情侵入余生》四季、《糯糯下山》三季——角色资产跨季复用，摊薄制作成本并沉淀粉丝。</p>
+      </section>
+
+      <section id="s4">
+        <div class="sec-head"><span class="sec-no">04</span><h2>用户画像：谁在看漫剧</h2></div>
+        <table class="plain">
+          <thead>
+            <tr><th>维度</th><th>数据</th><th>来源</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>性别</td><td class="num">男 6 : 女 4，男性偏好度显著更高</td><td class="dim">QuestMobile 2026</td></tr>
+            <tr><td>年龄</td><td class="num">18–40 岁近 80%；Z 世代 TGI 151.9</td><td class="dim">DataEye</td></tr>
+            <tr><td>地域</td><td class="num">三线及以下城市占比近 5 成</td><td class="dim">QuestMobile</td></tr>
+            <tr><td>规模</td><td class="num">2025 年约 1.2 亿，2026 年或达 2.8 亿</td><td class="dim">DataEye</td></tr>
+            <tr><td>对照</td><td class="num">红果真人短剧女 61–68%；红果免费漫剧男 62%</td><td class="dim">36 氪引 QuestMobile</td></tr>
+          </tbody>
+        </table>
+        <p>最关键的一组对照是：真人短剧用户以女性为主（61–68%），而免费漫剧用户男性占 62%，两者画像几乎镜像。这意味着在抖音 / 红果生态内部，<strong>漫剧与真人剧形成了天然的题材分工</strong>——漫剧吃下玄幻、修仙、重生、种田、末世这些强视觉、高产能、真人难以承载的男频爽文赛道；女频则刚刚开始向漫剧迁移，是增量所在。</p>
+      </section>
+
+      <section id="s5">
+        <div class="sec-head"><span class="sec-no">05</span><h2>变现与成本：钱从哪来，门槛在哪</h2></div>
+        <p>变现以<strong>IAA（免费观看 + 广告分账）为绝对主流</strong>：微短剧大盘中 IAA 占 71%、IAP 付费占 26%；快手漫剧 IAA 占比约 90%。抖音端同时存在跑通了的单集付费模式（如半亩文剧社 35 亿播放的付费连载）。出海是第三条曲线：海外 AI 短剧 8 月投放中女频素材占 52%，与国内「男频主导」形成互补，昆仑万维等厂已跑出下载量第一的案例。</p>
+        <table class="plain">
+          <thead>
+            <tr><th>项目</th><th>数据</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>制作成本</td><td class="num">100–3000 元 / 分钟</td><td class="dim">真人短剧约 1 万元 / 分钟，压缩 70–98%</td></tr>
+            <tr><td>单部成本（2D，120 分钟）</td><td class="num">8–10 万元</td><td class="dim">剧本 10–15%，算力约 30%，人工约 60%</td></tr>
+            <tr><td>爆款率</td><td class="num">0.47%</td><td class="dim">2026H1 新上 22.19 万部，破亿 1055 部</td></tr>
+            <tr><td>供给端</td><td class="num">承制公司 1216 → 698 家</td><td class="dim">约 90% AI 短剧公司亏损，报价半年跌 90%</td></tr>
+          </tbody>
+        </table>
+        <p class="note">成本塌陷让「单人剧组」成为可能，但新华网对「草根神话」的核查结论值得记住：制作门槛确实塌了，创作门槛纹丝不动——决定生死的仍是剧本、情绪节奏与投流，而不是会用 AI 工具。</p>
+      </section>
+
+      <section id="s6">
+        <div class="sec-head"><span class="sec-no">06</span><h2>趋势判断与入局建议</h2></div>
+        <ol class="trends">
+          <li>
+            <strong>求稳进红海：逆袭 + 都市情绪。</strong>
+            <div class="why">供给最大、模板最全，但 0.47% 的爆款率意味着拼的是剧本情绪节奏和投流效率，适合有投流能力和文案优势的团队。</div>
+          </li>
+          <li>
+            <strong>抓增量做男频新赛道：末世系统流、年代赶山赶海。</strong>
+            <div class="why">10 月抖音热播榜 TOP1 与 8 月多赛道爆发给出最新验证；强视觉题材恰好放大 AI 产能优势，且抖音付费模式已跑通。</div>
+          </li>
+          <li>
+            <strong>布局女频蓝海：萌宝团宠、大女主双强（无 CP）。</strong>
+            <div class="why">竞争烈度低于男频，红果 TOP30 已给出台阶；头部案例证明可向真人剧反向改编，IP 出口更宽。</div>
+          </li>
+          <li>
+            <strong>做连载 IP，不做单剧。</strong>
+            <div class="why">万妖七季、予你四季、糯糯三季——角色跨季复用摊薄成本、沉淀粉丝，是头部玩家的共同选择。</div>
+          </li>
+          <li>
+            <strong>形态上跟头部：3D 优先，画风统一；出海复用男频玄幻修仙。</strong>
+            <div class="why">红果百强 3D 化是明确信号；国内男频玄幻 / 修仙 / 系统文在海外已有下载与分账验证，译配成本随 AI 再降十倍。</div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="s7">
+        <div class="sec-head"><span class="sec-no">07</span><h2>数据口径与缺口</h2></div>
+        <p>本次调研全部基于公开搜索结果快照，未打开部分文章全文（本地网页正文抓取服务当日限流），需注意三点口径差异：</p>
+        <p class="wide">① 「漫剧大盘」与「AI 漫剧细分」常被混用——757 亿播放、189.8 亿元市场规模分属不同口径，前者含沙雕漫 / 动态漫等非 AI 形态；② 榜单数据来自第三方统计（影艺独舌、DataEye 等）而非抖音官方实时榜，月度波动大；③ 部分收益类数字（如「单条爆款净利 20 万+」）来自教程类内容，可信度低，未采信。</p>
+        <p>抖音端内实时热播榜无法直接抓取，如需逐日追踪，建议直接在抖音 App 内关注「漫剧」频道热播榜与红果 AI 漫剧榜的月度盘点。</p>
+      </section>
+
+      <section id="src">
+        <div class="colophon">
+          <div class="col-title">来源清单 / Sources</div>
+          <ol>
+            <li>DataEye 研究院《2025 年漫剧数据报告》<br><span class="u">fxbaogao.com/detail/5245319</span></li>
+            <li>36 氪《2025 漫剧年度报告：10 亿播放爆款出现，年增长 6 万部》<br><span class="u">m.36kr.com/p/3656062576882177</span></li>
+            <li>艾媒咨询《2025–2026 年中国 AI 漫剧行业趋势白皮书》<br><span class="u">iimedia.cn/c400/108457.html</span></li>
+            <li>界面新闻《7 月 AI 剧漫剧：新剧涨 20%》<br><span class="u">jiemian.com/article/14984686.html</span></li>
+            <li>知乎 / 影艺独舌《8 月 AI 剧漫剧：1647 亿播放！3D 漫强劲、女频亮眼》<br><span class="u">zhuanlan.zhihu.com/p/2083496444565239070</span></li>
+            <li>澎湃新闻《8 月 AI 剧漫剧百强榜：红果全是 3D》<br><span class="u">m.thepaper.cn/newsDetail_forward_34022517</span></li>
+            <li>moomoo 财讯《10 月漫剧行业观察：超 4000 款产品在投》<br><span class="u">moomoo.com/hans/news/post/61196237</span></li>
+            <li>优设网《拆解多部上亿播放的 AI 漫剧，我总结了六大爆款公式》<br><span class="u">uisdc.com/six-viral-formulas</span></li>
+            <li>虎嗅《漫剧切入大女主赛道，但无 CP 才是终极爽点？》<br><span class="u">huxiu.com/article/4868986.html</span></li>
+            <li>澎湃 / 21 经济网《AI 漫剧爆了再拍真人，短剧开始「反向开发」？》<br><span class="u">m.thepaper.cn/newsDetail_forward_34096819</span></li>
+            <li>36 氪《从「真人」到「漫人」，AI 漫剧以「爽感 + 低成本」迅猛崛起》<br><span class="u">m.36kr.com/p/3895496974026632</span></li>
+            <li>QuestMobile《2026 短剧行业洞察报告：行业用户 7.18 亿》<br><span class="u">questmobile.com.cn/research/report/2041710682848727041</span></li>
+            <li>钛媒体《单人手搓爆款、顶流艺人养成：暑期档 AI 漫剧的「超进化」》<br><span class="u">tmtpost.com/8119670.html</span></li>
+            <li>钛媒体《AI 短剧的暴富神话，半年就退烧了》<br><span class="u">tmtpost.com/8151367.html</span></li>
+            <li>知乎《788 集、35 亿播放、5885 万热度：做 AI 漫剧小团队怎么跑出大爆款》<br><span class="u">zhuanlan.zhihu.com/p/2086143201950409168</span></li>
+            <li>AITOP100《2025 年 10 月抖音漫剧播放量 TOP10 大揭秘》<br><span class="u">aitop100.cn/infomation/details/31272.html</span></li>
+            <li>证券时报《流量成本涨超 100%！AI 短剧产量暴增》<br><span class="u">stcn.com/article/detail/3984242.html</span></li>
+            <li>新华网《个人创作频出爆款？盘盘 AI 漫剧的「草根神话」》<br><span class="u">news.cn/ent/20260904/b52ce60fdc564398aeca730d203c76f5/c.html</span></li>
+          </ol>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+</body>
+</html>
