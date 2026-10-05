@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """打开作品管理的「待发布」筛选，打印待发布作品。"""
+import os
+import sys
 from playwright.sync_api import sync_playwright
 
-CDP = "http://127.0.0.1:9222"
+CDP = os.environ.get("KS_CDP", "http://127.0.0.1:9222")
 
 
 def main():

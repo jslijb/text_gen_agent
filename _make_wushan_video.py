@@ -119,7 +119,7 @@ SHOTS = [
              "" + STYLE,
          vprompt="参考图保持构图不变，日轮自云海升起金光漫染，云涛缓涌，"
                  "远景镜头极缓拉升，写实电影质感，无文字",
-         line="她死得很早，却让一座山活成了传说。你说，这样的永恒，是不是另一种活着？明天讲，西王母。"),
+         line="她死得很早，却让一座山活成了传说。你说，这样的永恒，是不是另一种活着？今晚讲，西王母。"),
 ]
 
 AI_META = {
@@ -138,7 +138,7 @@ PUBLISH = {
              "你说，这样算不算另一种活着？"
              "#山海经 #巫山神女 #AI经典奇谈 #原来神就是孤独的"),
     "comment": ("《中次七经》原文：姑媱之山，帝女死焉，其名曰女尸，化为䔄草。"
-                "她死得早，坟上的草吃了会被人喜欢，后来成了巫山神女。你眼里的她，是仙，还是留在山间的叹息？评论区聊聊。明天讲，西王母。"),
+                "她死得早，坟上的草吃了会被人喜欢，后来成了巫山神女。你眼里的她，是仙，还是留在山间的叹息？评论区聊聊。今晚讲，西王母。"),
 }
 
 
@@ -155,6 +155,28 @@ def P(s=""):
         print(str(s).encode("ascii", "replace").decode("ascii"))
 
 
+# --- DNS 污染规避：api.agnes-ai.cn 本地解析全为坏证书 IP（自签名/主机名不符）， ---
+# 经 DoH(223.5.5.5 与 1.12.12.12 一致)实测唯一真实 IP，仅对该域名固定直连并照常校验证书。
+import socket
+import http.client as _hc
+
+_AGNES_IP = "112.49.49.148"
+
+
+class _PinnedConn(_hc.HTTPSConnection):
+    def connect(self):
+        s = socket.create_connection((_AGNES_IP, 443), getattr(self, "timeout", None) or 120)
+        self.sock = self._context.wrap_socket(s, server_hostname=self.host)
+
+
+class _PinnedHTTPS(urllib.request.HTTPSHandler):
+    def https_open(self, req):
+        return self.do_open(_PinnedConn, req)
+
+
+_OPENER = urllib.request.build_opener(_PinnedHTTPS())
+
+
 def http(url, body=None, method="GET", key=None, timeout=120):
     h = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
     if key:
@@ -162,6 +184,9 @@ def http(url, body=None, method="GET", key=None, timeout=120):
     data = json.dumps(body).encode("utf-8") if body is not None else None
     r = urllib.request.Request(url, data=data, headers=h, method=method)
     try:
+        if urllib.parse.urlparse(url).hostname == "api.agnes-ai.cn":
+            with _OPENER.open(r, timeout=timeout) as resp:
+                return resp.status, resp.read().decode("utf-8", "ignore")
         with urllib.request.urlopen(r, timeout=timeout) as resp:
             return resp.status, resp.read().decode("utf-8", "ignore")
     except urllib.error.HTTPError as e:

@@ -75,6 +75,7 @@ _trash_*/
 .openclaw/
 .openclaw-attachments/
 .pw_chrome/
+.pw_chrome_*/
 
 # WorkBuddy 个人身份文件（含真实姓名 / 职业经历，Public 仓库不公开）
 /SOUL.md
